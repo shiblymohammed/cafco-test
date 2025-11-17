@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import MenuAnimation from "./menu/menuanimation";
 import CartIcon from "./menu/carticon";
 import SearchIcon from "./menu/searchicon";
@@ -8,13 +8,27 @@ import WishlistIcon from "./menu/wishlisticon";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
     <>
-      <nav className="hidden md:flex fixed top-0 left-0 right-0 bg-creme text-gray-900 z-50 h-16">
+      <nav className={`hidden md:flex fixed top-0 left-0 right-0 z-50 h-16 transition-all duration-300 ${
+        isScrolled ? "bg-creme" : "bg-transparent"
+      }`}>
         <div className="w-full h-full flex justify-center items-center px-4 relative">
           {/* Left Side - Hamburger and Search */}
-          <div className="absolute left-4 flex items-center gap-6">
+          <div className={`absolute left-4 flex items-center gap-6 transition-colors duration-300 ${
+            isScrolled ? "text-alpha" : "text-creme"
+          }`}>
             <button
               onClick={() => setIsOpen(!isOpen)}
               className="flex items-center justify-center"
@@ -29,10 +43,14 @@ export default function Navbar() {
           </div>
 
           {/* Center - Logo */}
-          <div className="text-4xl font-['brand-primary'] text-alpha">CAFCO</div>
+          <div className={`text-4xl font-['brand-primary'] transition-colors duration-300 ${
+            isScrolled ? "text-alpha" : "text-creme"
+          }`}>CAFCO</div>
 
           {/* Right Side - Wishlist, Profile, Cart */}
-          <div className="absolute right-4 flex items-center gap-6">
+          <div className={`absolute right-4 flex items-center gap-6 transition-colors duration-300 ${
+            isScrolled ? "text-alpha" : "text-creme"
+          }`}>
             <button className="p-1 flex items-center justify-center" aria-label="Wishlist">
               <WishlistIcon size={24} />
             </button>

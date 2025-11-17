@@ -22,10 +22,13 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
 body {
   font-family: system-ui, -apple-system, sans-serif;
+  overflow-x: hidden;
+  width: 100%;
 }
 
 /* Hamburger Menu Animation */
@@ -34,8 +37,9 @@ body {
   stroke: currentColor;
   stroke-width: 1.6;
   stroke-linecap: round;
-  transition: 0.35s ease;
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.15s ease;
   transform-origin: 12px 12px;
+  will-change: transform, opacity;
 }
 
 /* Top line → rotates to \ */
