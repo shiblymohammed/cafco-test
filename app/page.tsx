@@ -10,7 +10,7 @@ import Testimonial from "@/src/components/homepage/Testimonial";
 
 export default function HomePage() {
   return (
-    <div className="relative">
+    <div className="relative bg-creme">
       <Hero />
       <div className="relative">
         <Popular />
