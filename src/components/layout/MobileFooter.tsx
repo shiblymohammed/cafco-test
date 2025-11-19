@@ -6,7 +6,7 @@ import WhatsAppIcon from "./footer/whatsappicon";
 
 export default function MobileFooter() {
   return (
-    <footer className="md:hidden bg-alpha text-white flex flex-col">
+    <footer className="md:hidden bg-[#171717] text-white flex flex-col">
       {/* Top Section - Social Buttons and CAFCO */}
       <div className="h-12 flex items-center shrink-0">
         {/* Left Side - Social Buttons */}
@@ -30,7 +30,7 @@ export default function MobileFooter() {
 
         {/* Center - CAFCO Brand */}
         <div className="flex-1 flex items-center justify-center">
-          <p className="text-4xl font-['brand-primary']">CAFCO</p>
+          <p className="text-4xl" style={{ fontFamily: 'brand-primary' }}>CAFCO</p>
         </div>
 
         {/* Right Side - LinkedIn and WhatsApp Buttons */}
@@ -54,7 +54,7 @@ export default function MobileFooter() {
       </div>
 
       {/* Decorative Line */}
-      <div className="h-px bg-linear-to-r from-transparent via-white/20 to-transparent" />
+      <div className="h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
 
       {/* Middle Section - Links */}
       <div className="flex gap-12 justify-center items-center px-6 py-8" style={{marginTop:'1rem',marginBottom:'1rem'}}>
