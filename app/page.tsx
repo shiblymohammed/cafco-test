@@ -1,5 +1,5 @@
 import Hero from "@/src/components/homepage/Hero";
-import Popular from "@/src/components/homepage/Popular";
+import Popular from "@/src/components/homepage/BestSellers";
 import HotSelling from "@/src/components/homepage/HotSelling";
 import Categories from "@/src/components/homepage/Categories";
 import Collections from "@/src/components/homepage/Collections";
@@ -10,16 +10,18 @@ import Testimonial from "@/src/components/homepage/Testimonial";
 
 export default function HomePage() {
   return (
-    <>
+    <div className="relative">
       <Hero />
-      <Popular />
-      <HotSelling />
-      <Categories />
-      <Collections />
-      <Offers />
-      <AboutSection />
-      <Marketing />
-      <Testimonial />
-    </>
+      <div className="relative">
+        <Popular />
+        <HotSelling />
+        <Categories />
+        <Collections />
+        <Offers />
+        <AboutSection />
+        <Marketing />
+        <Testimonial />
+      </div>
+    </div>
   );
 }
