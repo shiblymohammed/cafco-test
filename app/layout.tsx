@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Navbar from "@/src/components/layout/Navbar";
 import Footer from "@/src/components/layout/Footer";
+import MobileFooter from "@/src/components/layout/MobileFooter";
 import MobileNav from "@/src/components/layout/MobileNav";
 
 export const metadata: Metadata = {
@@ -22,6 +23,7 @@ export default function RootLayout({
                     {children}
                 </main>
                 <Footer />
+                <MobileFooter />
                 <MobileNav />
             </body>
         </html>
