@@ -69,3 +69,72 @@ body {
   width: 0;
   height: 0;
 }
+/* Testimonial Carousel Animations */
+@keyframes slide-right-to-left {
+  0% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+}
+
+@keyframes slide-left-to-right {
+  0% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+.animate-slide-right-to-left {
+  animation: slide-right-to-left 4s ease-in-out;
+}
+
+.animate-slide-left-to-right {
+  animation: slide-left-to-right 4s ease-in-out;
+}
+
+/* Infinite Scrolling Testimonials */
+@keyframes scroll-left {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes scroll-right {
+  from {
+    transform: translateX(-50%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+.animate-slide-left {
+  animation: scroll-left 30s linear infinite;
+}
+
+.animate-slide-right {
+  animation: scroll-right 30s linear infinite;
+}
