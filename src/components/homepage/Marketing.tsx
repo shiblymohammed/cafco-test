@@ -1,7 +1,9 @@
 export default function Marketing() {
   return (
-    <section className="h-screen bg-pink-500 flex items-center justify-center">
-      <h1 className="text-6xl font-bold text-white">MARKETING SECTION</h1>
+    <section className="h-screen bg-creme flex items-center justify-center">
+      <h2 className="text-4xl font-light text-neutral-300 uppercase tracking-widest">
+        Marketing Demo
+      </h2>
     </section>
   );
 }

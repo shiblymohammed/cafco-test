@@ -21,7 +21,7 @@ export default function Navbar() {
 
   return (
     <>
-      <nav className={`hidden md:flex fixed top-0 left-0 right-0 z-50 h-16 transition-all duration-300 ${
+      <nav className={`hidden md:flex fixed top-0 left-0 right-0 z-50 h-16 transition-all duration-300 shadow-[0_4px_6px_-1px_rgba(0,0,0,0.1)] ${
         isScrolled ? "bg-creme" : "bg-transparent"
       }`}>
         <div className="w-full h-full flex justify-center items-center px-4 relative">

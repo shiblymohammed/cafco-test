@@ -22,7 +22,7 @@ export default function MobileNav() {
   return (
     <>
       {/* Top Navbar */}
-      <div className="flex md:hidden fixed top-0 left-0 right-0 z-50 h-12 bg-transparent">
+      <div className="flex md:hidden fixed top-0 left-0 right-0 z-50 h-12 bg-transparent shadow-[0_4px_6px_-1px_rgba(0,0,0,0.1)]">
         <div className="h-full w-full flex items-center">
 
           {/* Hamburger Button - Square */}

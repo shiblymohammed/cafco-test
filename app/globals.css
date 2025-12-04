@@ -1,10 +1,6 @@
-@import "tailwindcss";
-
-@theme {
-  --color-creme: #f6f1eb;
-  --color-alpha: #171717;
-  --color-beta: #ffffff;
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 @font-face {
   font-family: 'brand-primary';
@@ -69,6 +65,7 @@ body {
   width: 0;
   height: 0;
 }
+
 /* Testimonial Carousel Animations */
 @keyframes slide-right-to-left {
   0% {
@@ -137,4 +134,21 @@ body {
 
 .animate-slide-right {
   animation: scroll-right 30s linear infinite;
+}
+
+/* Best Sellers Swiper Pagination */
+.best-sellers-pagination .swiper-pagination-bullet {
+  width: 8px;
+  height: 8px;
+  background: #171717;
+  opacity: 0.2;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.best-sellers-pagination .swiper-pagination-bullet-active {
+  opacity: 1;
+  width: 24px;
+  border-radius: 4px;
 }

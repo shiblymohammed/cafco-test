@@ -14,8 +14,8 @@ export default function HomePage() {
       <Hero />
       <div className="relative">
         <Popular />
-        <HotSelling />
         <Categories />
+        <HotSelling />
         <Collections />
         <Offers />
         <AboutSection />
