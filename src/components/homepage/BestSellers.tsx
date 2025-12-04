@@ -12,6 +12,8 @@ import {
   ProductCardTitle,
   ProductCardDescription,
   ProductCardMeta,
+  ProductCardBadge,
+  ProductCardWishlist,
 } from "@/src/components/ui/ProductCard";
 
 interface Product {
@@ -21,7 +23,7 @@ interface Product {
   collection: string;
   category: string;
   image: string;
-  badge?: "sale" | "new";
+  badge?: "sale" | "new" | "gold" | "eco" | "limited";
 }
 
 const products: Product[] = [
@@ -31,7 +33,8 @@ const products: Product[] = [
     description: "Premium Living Room Furniture",
     collection: "Home Living",
     category: "Chairs",
-    image: "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=600&h=800&fit=crop",
+    image:
+      "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=600&h=800&fit=crop",
     badge: "sale",
   },
   {
@@ -40,7 +43,8 @@ const products: Product[] = [
     description: "Modern Accent Table",
     collection: "Home Living",
     category: "Tables",
-    image: "https://images.unsplash.com/photo-1499933374294-4584851497cc?w=600&h=800&fit=crop",
+    image:
+      "https://images.unsplash.com/photo-1499933374294-4584851497cc?w=600&h=800&fit=crop",
     badge: "new",
   },
   {
@@ -49,8 +53,9 @@ const products: Product[] = [
     description: "Handcrafted Home Decor",
     collection: "Decor",
     category: "Vases",
-    image: "https://images.unsplash.com/photo-1578500494198-246f612d3b3d?w=600&h=800&fit=crop",
-    badge: "sale",
+    image:
+      "https://images.unsplash.com/photo-1578500494198-246f612d3b3d?w=600&h=800&fit=crop",
+    badge: "eco",
   },
   {
     id: 4,
@@ -58,7 +63,8 @@ const products: Product[] = [
     description: "Soft Textured Cushion",
     collection: "Bedroom",
     category: "Pillows",
-    image: "https://images.unsplash.com/photo-1584100936595-c0654b55a2e2?w=600&h=800&fit=crop",
+    image:
+      "https://images.unsplash.com/photo-1584100936595-c0654b55a2e2?w=600&h=800&fit=crop",
   },
   {
     id: 5,
@@ -66,8 +72,9 @@ const products: Product[] = [
     description: "Ambient Lighting Solution",
     collection: "Home Living",
     category: "Lighting",
-    image: "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?w=600&h=800&fit=crop",
-    badge: "new",
+    image:
+      "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?w=600&h=800&fit=crop",
+    badge: "limited",
   },
   {
     id: 6,
@@ -75,7 +82,8 @@ const products: Product[] = [
     description: "Natural Storage Organizer",
     collection: "Storage",
     category: "Baskets",
-    image: "https://images.unsplash.com/photo-1519710164239-da123dc03ef4?w=600&h=800&fit=crop",
+    image:
+      "https://images.unsplash.com/photo-1519710164239-da123dc03ef4?w=600&h=800&fit=crop",
     badge: "sale",
   },
   {
@@ -84,7 +92,9 @@ const products: Product[] = [
     description: "Contemporary Wall Art",
     collection: "Decor",
     category: "Clocks",
-    image: "https://images.unsplash.com/photo-1563861826100-9cb868fdbe1c?w=600&h=800&fit=crop",
+    image:
+      "https://images.unsplash.com/photo-1563861826100-9cb868fdbe1c?w=600&h=800&fit=crop",
+    badge: "gold",
   },
   {
     id: 8,
@@ -92,7 +102,8 @@ const products: Product[] = [
     description: "Cozy Bedroom Essential",
     collection: "Bedroom",
     category: "Blankets",
-    image: "https://images.unsplash.com/photo-1616627561839-074385245ff6?w=600&h=800&fit=crop",
+    image:
+      "https://images.unsplash.com/photo-1616627561839-074385245ff6?w=600&h=800&fit=crop",
     badge: "new",
   },
 ];
@@ -101,45 +112,123 @@ function ProductCardItem({ product }: { product: Product }) {
   return (
     <ProductCard>
       <ProductCardImageContainer>
+        {product.badge && (
+          <ProductCardBadge variant={product.badge}>
+            {product.badge === "gold"
+              ? "Premium"
+              : product.badge === "eco"
+                ? "Eco-Friendly"
+                : product.badge === "limited"
+                  ? "Limited"
+                  : product.badge}
+          </ProductCardBadge>
+        )}
+        <ProductCardWishlist />
         <ProductCardImage src={product.image} alt={product.name} />
       </ProductCardImageContainer>
       <ProductCardTitle>{product.name}</ProductCardTitle>
-      <ProductCardDescription>{product.description}</ProductCardDescription>
-      <ProductCardMeta collection={product.collection} category={product.category} />
+      <ProductCardDescription>
+        {product.description}
+      </ProductCardDescription>
+      <ProductCardMeta
+        collection={product.collection}
+        category={product.category}
+      />
     </ProductCard>
   );
 }
 
 export default function BestSellers() {
   return (
-    <section className="bg-creme py-8 md:py-12">
-      {/* Title */}
-      <h2 className="px-5 md:px-8 text-2xl md:text-3xl lg:text-4xl text-alpha font-secondary mb-6 md:mb-8">
-        Shop Best Sellers
-      </h2>
+    <section className="bg-creme py-section-mobile md:py-section overflow-hidden">
+      {/* Section Header */}
+      <div className="flex items-end justify-between px-container max-w-content mx-auto mb-8 md:mb-10">
+        <div className="animate-slide-up">
+          {/* Accent line */}
+          <div className="flex items-center gap-3 mb-3">
+            <div className="w-8 h-0.5 bg-tango rounded-full" />
+            <span className="text-caption text-tango uppercase tracking-wider font-medium">
+              Trending Now
+            </span>
+          </div>
+          <h2 className="text-h2 md:text-h1 text-text-primary font-secondary tracking-tight">
+            Shop Best Sellers
+          </h2>
+          <p className="text-small text-text-secondary mt-2 leading-relaxed max-w-md">
+            Our most loved pieces, handpicked for you
+          </p>
+        </div>
+        <a
+          href="#"
+          className="hidden md:flex items-center gap-2 px-4 py-2 text-small text-tango border border-tango rounded-button hover:bg-tango hover:text-text-inverse transition-all duration-fast tracking-wide group"
+        >
+          View All
+          <svg
+            className="w-4 h-4 transition-transform duration-fast group-hover:translate-x-1"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={1.5}
+              d="M9 5l7 7-7 7"
+            />
+          </svg>
+        </a>
+      </div>
 
       {/* Products Swiper */}
-      <div>
+      <div className="animate-fade-in">
         <Swiper
           modules={[FreeMode, Pagination]}
-          spaceBetween={8}
-          slidesPerView={1.5}
-          slidesOffsetBefore={16}
-          slidesOffsetAfter={16}
+          spaceBetween={16}
+          slidesPerView={1.4}
+          slidesOffsetBefore={32}
+          slidesOffsetAfter={32}
           freeMode={{ enabled: true, sticky: false }}
-          pagination={{ clickable: true, el: '.best-sellers-pagination' }}
+          pagination={{
+            clickable: true,
+            el: ".best-sellers-pagination",
+          }}
           grabCursor={true}
           breakpoints={{
-            480: { slidesPerView: 1.8, spaceBetween: 12, slidesOffsetBefore: 16, slidesOffsetAfter: 16 },
-            640: { slidesPerView: 2.3, spaceBetween: 12, slidesOffsetBefore: 20, slidesOffsetAfter: 20 },
-            768: { slidesPerView: 2.8, spaceBetween: 14, slidesOffsetBefore: 24, slidesOffsetAfter: 24 },
-            1024: { slidesPerView: 3.5, spaceBetween: 16, slidesOffsetBefore: 32, slidesOffsetAfter: 32 },
-            1280: { slidesPerView: 4.2, spaceBetween: 16, slidesOffsetBefore: 32, slidesOffsetAfter: 32 },
+            480: {
+              slidesPerView: 1.8,
+              spaceBetween: 16,
+              slidesOffsetBefore: 32,
+              slidesOffsetAfter: 32,
+            },
+            640: {
+              slidesPerView: 2.3,
+              spaceBetween: 16,
+              slidesOffsetBefore: 32,
+              slidesOffsetAfter: 32,
+            },
+            768: {
+              slidesPerView: 2.8,
+              spaceBetween: 20,
+              slidesOffsetBefore: 32,
+              slidesOffsetAfter: 32,
+            },
+            1024: {
+              slidesPerView: 3.5,
+              spaceBetween: 20,
+              slidesOffsetBefore: 32,
+              slidesOffsetAfter: 32,
+            },
+            1280: {
+              slidesPerView: 4.2,
+              spaceBetween: 24,
+              slidesOffsetBefore: 32,
+              slidesOffsetAfter: 32,
+            },
           }}
           className="best-sellers-swiper"
         >
           {products.map((product) => (
-            <SwiperSlide key={product.id} className="!h-auto pb-4">
+            <SwiperSlide key={product.id} className="!h-auto pb-6">
               <ProductCardItem product={product} />
             </SwiperSlide>
           ))}
@@ -147,7 +236,30 @@ export default function BestSellers() {
       </div>
 
       {/* Pagination Dots */}
-      <div className="best-sellers-pagination flex justify-center gap-1.5 px-5 md:px-8 pt-4" />
+      <div className="best-sellers-pagination flex justify-center gap-2 px-container pt-4" />
+
+      {/* Mobile View All Link */}
+      <div className="md:hidden flex justify-center mt-8 px-container">
+        <a
+          href="#"
+          className="inline-flex items-center gap-2 px-8 py-3 bg-tango text-text-inverse text-small rounded-button hover:bg-hover-accent transition-all duration-fast tracking-wide group shadow-card hover:shadow-card-hover"
+        >
+          View All Products
+          <svg
+            className="w-4 h-4 transition-transform duration-fast group-hover:translate-x-1"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={1.5}
+              d="M9 5l7 7-7 7"
+            />
+          </svg>
+        </a>
+      </div>
     </section>
   );
 }
