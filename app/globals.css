@@ -137,18 +137,20 @@ body {
 }
 
 /* Best Sellers Swiper Pagination */
-.best-sellers-pagination .swiper-pagination-bullet {
+.best-sellers-pagination .swiper-pagination-bullet,
+.test-best-sellers-pagination .swiper-pagination-bullet {
   width: 8px;
   height: 8px;
-  background: #171717;
+  background: theme('colors.alpha');
   opacity: 0.2;
-  border-radius: 50%;
+  border-radius: theme('borderRadius.badge');
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all theme('transitionDuration.normal') ease;
 }
 
-.best-sellers-pagination .swiper-pagination-bullet-active {
+.best-sellers-pagination .swiper-pagination-bullet-active,
+.test-best-sellers-pagination .swiper-pagination-bullet-active {
   opacity: 1;
   width: 24px;
-  border-radius: 4px;
+  border-radius: theme('borderRadius.button');
 }
