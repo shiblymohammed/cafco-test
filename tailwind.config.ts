@@ -67,13 +67,13 @@ const config: Config = {
       // === SPACING ===
       spacing: {
         'section': '80px',         // Desktop section padding
-        'section-mobile': '48px',  // Mobile section padding
-        'container': '32px',       // Container side padding
+        'section-mobile': '18px',  // Mobile section padding
+        'container': '6px',       // Container side padding
       },
 
       // === BORDER RADIUS ===
       borderRadius: {
-        'card': '8px',             // Card corners
+        'card': '6px',             // Card corners
         'button': '4px',           // Button corners
         'badge': '2px',            // Badge corners
       },

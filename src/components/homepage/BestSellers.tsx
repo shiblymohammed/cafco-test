@@ -144,19 +144,9 @@ export default function BestSellers() {
       {/* Section Header */}
       <div className="flex items-end justify-between px-container max-w-content mx-auto mb-8 md:mb-10">
         <div className="animate-slide-up">
-          {/* Accent line */}
-          <div className="flex items-center gap-3 mb-3">
-            <div className="w-8 h-0.5 bg-tango rounded-full" />
-            <span className="text-caption text-tango uppercase tracking-wider font-medium">
-              Trending Now
-            </span>
-          </div>
           <h2 className="text-h2 md:text-h1 text-text-primary font-secondary tracking-tight">
             Shop Best Sellers
           </h2>
-          <p className="text-small text-text-secondary mt-2 leading-relaxed max-w-md">
-            Our most loved pieces, handpicked for you
-          </p>
         </div>
         <a
           href="#"
@@ -183,10 +173,10 @@ export default function BestSellers() {
       <div className="animate-fade-in">
         <Swiper
           modules={[FreeMode, Pagination]}
-          spaceBetween={16}
-          slidesPerView={1.4}
-          slidesOffsetBefore={32}
-          slidesOffsetAfter={32}
+          spaceBetween={10}
+          slidesPerView={2}
+          slidesOffsetBefore={6}
+          slidesOffsetAfter={6}
           freeMode={{ enabled: true, sticky: false }}
           pagination={{
             clickable: true,
@@ -195,34 +185,34 @@ export default function BestSellers() {
           grabCursor={true}
           breakpoints={{
             480: {
-              slidesPerView: 1.8,
-              spaceBetween: 16,
-              slidesOffsetBefore: 32,
-              slidesOffsetAfter: 32,
+              slidesPerView: 2.2,
+              spaceBetween: 10,
+              slidesOffsetBefore: 6,
+              slidesOffsetAfter: 6,
             },
             640: {
-              slidesPerView: 2.3,
-              spaceBetween: 16,
-              slidesOffsetBefore: 32,
-              slidesOffsetAfter: 32,
+              slidesPerView: 2.8,
+              spaceBetween: 10,
+              slidesOffsetBefore: 6,
+              slidesOffsetAfter: 6,
             },
             768: {
-              slidesPerView: 2.8,
-              spaceBetween: 20,
-              slidesOffsetBefore: 32,
-              slidesOffsetAfter: 32,
+              slidesPerView: 3.2,
+              spaceBetween: 12,
+              slidesOffsetBefore: 6,
+              slidesOffsetAfter: 6,
             },
             1024: {
-              slidesPerView: 3.5,
-              spaceBetween: 20,
-              slidesOffsetBefore: 32,
-              slidesOffsetAfter: 32,
+              slidesPerView: 4,
+              spaceBetween: 12,
+              slidesOffsetBefore: 6,
+              slidesOffsetAfter: 6,
             },
             1280: {
-              slidesPerView: 4.2,
-              spaceBetween: 24,
-              slidesOffsetBefore: 32,
-              slidesOffsetAfter: 32,
+              slidesPerView: 5,
+              spaceBetween: 14,
+              slidesOffsetBefore: 6,
+              slidesOffsetAfter: 6,
             },
           }}
           className="best-sellers-swiper"
@@ -238,28 +228,7 @@ export default function BestSellers() {
       {/* Pagination Dots */}
       <div className="best-sellers-pagination flex justify-center gap-2 px-container pt-4" />
 
-      {/* Mobile View All Link */}
-      <div className="md:hidden flex justify-center mt-8 px-container">
-        <a
-          href="#"
-          className="inline-flex items-center gap-2 px-8 py-3 bg-tango text-text-inverse text-small rounded-button hover:bg-hover-accent transition-all duration-fast tracking-wide group shadow-card hover:shadow-card-hover"
-        >
-          View All Products
-          <svg
-            className="w-4 h-4 transition-transform duration-fast group-hover:translate-x-1"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={1.5}
-              d="M9 5l7 7-7 7"
-            />
-          </svg>
-        </a>
-      </div>
+
     </section>
   );
 }

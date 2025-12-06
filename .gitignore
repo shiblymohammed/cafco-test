@@ -12,6 +12,9 @@
 
 # testing
 /coverage
+/app/test/
+/app/testdetail/
+/src/components/homepage/TestBestSellers.tsx
 
 # next.js
 /.next/
