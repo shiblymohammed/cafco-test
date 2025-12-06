@@ -154,3 +154,20 @@ body {
   width: 24px;
   border-radius: theme('borderRadius.button');
 }
+
+/* Testimonial Swiper Pagination */
+.testimonial-pagination .swiper-pagination-bullet {
+  width: 8px;
+  height: 8px;
+  background: theme('colors.alpha');
+  opacity: 0.2;
+  border-radius: theme('borderRadius.badge');
+  cursor: pointer;
+  transition: all theme('transitionDuration.normal') ease;
+}
+
+.testimonial-pagination .swiper-pagination-bullet-active {
+  opacity: 1;
+  width: 24px;
+  border-radius: theme('borderRadius.button');
+}
