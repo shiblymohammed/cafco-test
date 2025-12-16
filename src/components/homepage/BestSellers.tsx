@@ -112,17 +112,6 @@ function ProductCardItem({ product }: { product: Product }) {
   return (
     <ProductCard>
       <ProductCardImageContainer>
-        {product.badge && (
-          <ProductCardBadge variant={product.badge}>
-            {product.badge === "gold"
-              ? "Premium"
-              : product.badge === "eco"
-                ? "Eco-Friendly"
-                : product.badge === "limited"
-                  ? "Limited"
-                  : product.badge}
-          </ProductCardBadge>
-        )}
         <ProductCardWishlist />
         <ProductCardImage src={product.image} alt={product.name} />
       </ProductCardImageContainer>
@@ -142,9 +131,9 @@ export default function BestSellers() {
   return (
     <section className="bg-creme py-section-mobile md:py-section overflow-hidden">
       {/* Section Header */}
-      <div className="flex items-end justify-between px-container max-w-content mx-auto mb-8 md:mb-10">
+      <div className="flex items-end justify-between px-4 max-w-content mx-auto mb-4 md:mb-6">
         <div className="animate-slide-up">
-          <h2 className="text-h2 md:text-h1 text-text-primary font-secondary tracking-tight">
+          <h2 className="text-h2 md:text-h1 text-text-primary font-secondary font-bold uppercase tracking-tight">
             Shop Best Sellers
           </h2>
         </div>
@@ -173,7 +162,7 @@ export default function BestSellers() {
       <div className="animate-fade-in">
         <Swiper
           modules={[FreeMode, Pagination]}
-          spaceBetween={10}
+          spaceBetween={6}
           slidesPerView={2}
           slidesOffsetBefore={6}
           slidesOffsetAfter={6}
@@ -186,31 +175,31 @@ export default function BestSellers() {
           breakpoints={{
             480: {
               slidesPerView: 2.2,
-              spaceBetween: 10,
+              spaceBetween: 6,
               slidesOffsetBefore: 6,
               slidesOffsetAfter: 6,
             },
             640: {
               slidesPerView: 2.8,
-              spaceBetween: 10,
+              spaceBetween: 6,
               slidesOffsetBefore: 6,
               slidesOffsetAfter: 6,
             },
             768: {
               slidesPerView: 3.2,
-              spaceBetween: 12,
+              spaceBetween: 8,
               slidesOffsetBefore: 6,
               slidesOffsetAfter: 6,
             },
             1024: {
               slidesPerView: 4,
-              spaceBetween: 12,
+              spaceBetween: 8,
               slidesOffsetBefore: 6,
               slidesOffsetAfter: 6,
             },
             1280: {
               slidesPerView: 5,
-              spaceBetween: 14,
+              spaceBetween: 10,
               slidesOffsetBefore: 6,
               slidesOffsetAfter: 6,
             },
@@ -226,7 +215,7 @@ export default function BestSellers() {
       </div>
 
       {/* Pagination Dots */}
-      <div className="best-sellers-pagination flex justify-center gap-2 px-container pt-4" />
+      <div className="best-sellers-pagination flex justify-center gap-1 px-4 pt-2" />
 
 
     </section>

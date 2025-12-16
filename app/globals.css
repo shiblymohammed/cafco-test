@@ -137,22 +137,29 @@ body {
 }
 
 /* Best Sellers Swiper Pagination */
+.best-sellers-pagination,
+.test-best-sellers-pagination {
+  gap: 4px !important;
+}
+
 .best-sellers-pagination .swiper-pagination-bullet,
 .test-best-sellers-pagination .swiper-pagination-bullet {
-  width: 8px;
-  height: 8px;
+  width: 5px;
+  height: 5px;
   background: theme('colors.alpha');
-  opacity: 0.2;
-  border-radius: theme('borderRadius.badge');
+  opacity: 0.25;
+  border-radius: 50%;
   cursor: pointer;
-  transition: all theme('transitionDuration.normal') ease;
+  transition: all theme('transitionDuration.fast') ease;
+  margin: 0 2px !important;
 }
 
 .best-sellers-pagination .swiper-pagination-bullet-active,
 .test-best-sellers-pagination .swiper-pagination-bullet-active {
   opacity: 1;
-  width: 24px;
-  border-radius: theme('borderRadius.button');
+  width: 14px;
+  border-radius: 3px;
+  background: theme('colors.tango');
 }
 
 /* Testimonial Swiper Pagination */

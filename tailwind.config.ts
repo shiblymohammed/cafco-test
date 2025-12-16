@@ -198,7 +198,7 @@ const config: Config = {
       // === FONTS ===
       fontFamily: {
         primary: ["var(--font-hammersmith)", "sans-serif"],
-        secondary: ["var(--font-averia)", "serif"],
+        secondary: ["var(--font-playfair)", "serif"],
         brand: ["brand-primary", "sans-serif"],
       },
     },
