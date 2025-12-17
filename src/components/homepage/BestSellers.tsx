@@ -14,6 +14,7 @@ import {
   ProductCardMeta,
   ProductCardBadge,
   ProductCardWishlist,
+  ProductCardQuickAdd,
 } from "@/src/components/ui/ProductCard";
 
 interface Product {
@@ -110,114 +111,72 @@ const products: Product[] = [
 
 function ProductCardItem({ product }: { product: Product }) {
   return (
-    <ProductCard>
+    <ProductCard href={`/product/${product.name.toLowerCase().replace(/ /g, "-")}`}>
       <ProductCardImageContainer>
         <ProductCardWishlist />
         <ProductCardImage src={product.image} alt={product.name} />
+        <ProductCardQuickAdd />
+        {product.badge && (
+            <ProductCardBadge variant={product.badge}>{product.badge}</ProductCardBadge>
+        )}
       </ProductCardImageContainer>
-      <ProductCardTitle>{product.name}</ProductCardTitle>
-      <ProductCardDescription>
-        {product.description}
-      </ProductCardDescription>
-      <ProductCardMeta
-        collection={product.collection}
-        category={product.category}
-      />
+      
+      <div className="flex flex-col items-start text-left">
+        <ProductCardTitle>{product.name}</ProductCardTitle>
+        <ProductCardMeta
+          collection={product.collection}
+          category={product.category}
+        />
+         {/* Description */}
+        <ProductCardDescription className="opacity-70">
+           {product.description}
+        </ProductCardDescription>
+      </div>
     </ProductCard>
   );
 }
 
 export default function BestSellers() {
   return (
-    <section className="bg-creme py-section-mobile md:py-section overflow-hidden">
-      {/* Section Header */}
-      <div className="flex items-end justify-between px-4 max-w-content mx-auto mb-4 md:mb-6">
-        <div className="animate-slide-up">
-          <h2 className="text-h2 md:text-h1 text-text-primary font-secondary font-bold uppercase tracking-tight">
-            Shop Best Sellers
+    <section className="bg-creme py-6 md:py-8 overflow-hidden border-t border-border-light/30">
+        
+      {/* Editorial Header - Consistent Style */}
+      <div className="flex items-center justify-center px-4 md:px-6 max-w-[1440px] mx-auto mb-10 md:mb-16">
+        <div className="animate-slide-up text-center">
+          <span className="block text-xs font-primary uppercase tracking-[0.25em] text-alpha/60 mb-1.5">
+             Shop The Icons
+          </span>
+          <h2 className="text-3xl md:text-5xl font-secondary text-alpha tracking-tight">
+            Best Sellers
           </h2>
         </div>
-        <a
-          href="#"
-          className="hidden md:flex items-center gap-2 px-4 py-2 text-small text-tango border border-tango rounded-button hover:bg-tango hover:text-text-inverse transition-all duration-fast tracking-wide group"
-        >
-          View All
-          <svg
-            className="w-4 h-4 transition-transform duration-fast group-hover:translate-x-1"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={1.5}
-              d="M9 5l7 7-7 7"
-            />
-          </svg>
-        </a>
       </div>
 
-      {/* Products Swiper */}
-      <div className="animate-fade-in">
+      {/* Products Swiper - High Density Marketplace View */}
+      <div className="pl-4 md:pl-8 animate-fade-in" style={{ animationDelay: '0.1s' }}>
         <Swiper
           modules={[FreeMode, Pagination]}
-          spaceBetween={6}
-          slidesPerView={2}
-          slidesOffsetBefore={6}
-          slidesOffsetAfter={6}
-          freeMode={{ enabled: true, sticky: false }}
-          pagination={{
-            clickable: true,
-            el: ".best-sellers-pagination",
-          }}
+          spaceBetween={4}
+          slidesPerView={1.6}
+          speed={600}
+          freeMode={{ enabled: true, sticky: false, momentumRatio: 0.5 }}
           grabCursor={true}
           breakpoints={{
-            480: {
-              slidesPerView: 2.2,
-              spaceBetween: 6,
-              slidesOffsetBefore: 6,
-              slidesOffsetAfter: 6,
-            },
-            640: {
-              slidesPerView: 2.8,
-              spaceBetween: 6,
-              slidesOffsetBefore: 6,
-              slidesOffsetAfter: 6,
-            },
-            768: {
-              slidesPerView: 3.2,
-              spaceBetween: 8,
-              slidesOffsetBefore: 6,
-              slidesOffsetAfter: 6,
-            },
-            1024: {
-              slidesPerView: 4,
-              spaceBetween: 8,
-              slidesOffsetBefore: 6,
-              slidesOffsetAfter: 6,
-            },
-            1280: {
-              slidesPerView: 5,
-              spaceBetween: 10,
-              slidesOffsetBefore: 6,
-              slidesOffsetAfter: 6,
-            },
+            480: { slidesPerView: 2.1, spaceBetween: 4 },
+            640: { slidesPerView: 2.5, spaceBetween: 5 },
+            768: { slidesPerView: 3.2, spaceBetween: 5 },
+            1024: { slidesPerView: 4.2, spaceBetween: 6 },
+            1280: { slidesPerView: 5.2, spaceBetween: 6 },
           }}
-          className="best-sellers-swiper"
+          className="best-sellers-swiper !overflow-visible"
         >
           {products.map((product) => (
-            <SwiperSlide key={product.id} className="!h-auto pb-6">
+            <SwiperSlide key={product.id} className="!h-auto transition-opacity duration-500 hover:z-10">
               <ProductCardItem product={product} />
             </SwiperSlide>
           ))}
         </Swiper>
       </div>
-
-      {/* Pagination Dots */}
-      <div className="best-sellers-pagination flex justify-center gap-1 px-4 pt-2" />
-
-
     </section>
   );
 }

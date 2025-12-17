@@ -1,20 +1,38 @@
 import { ReactNode } from "react";
 
-// Main ProductCard container - uses design system
+// Main ProductCard container - Minimalist & Premium
+
+// Main ProductCard container - Minimalist & Premium
+import Link from "next/link";
+
 interface ProductCardProps {
   children: ReactNode;
   className?: string;
   onClick?: () => void;
+  href?: string;
 }
 
 export function ProductCard({
   children,
   className = "",
   onClick,
+  href,
 }: ProductCardProps) {
+  if (href) {
+    return (
+      <Link
+        href={href}
+        className={`group cursor-pointer relative bg-transparent block ${className}`}
+        onClick={onClick}
+      >
+        {children}
+      </Link>
+    );
+  }
+
   return (
     <div
-      className={`group cursor-pointer bg-ivory border border-border-light rounded-card shadow-card hover:shadow-card-hover hover:border-border-medium transition-all duration-normal animate-fade-in ${className}`}
+      className={`group cursor-pointer relative bg-transparent ${className}`}
       onClick={onClick}
     >
       {children}
@@ -22,7 +40,7 @@ export function ProductCard({
   );
 }
 
-// Product Image with 3:4 ratio
+// Product Image - Sharp architectural look
 interface ProductCardImageProps {
   src: string;
   alt: string;
@@ -36,20 +54,43 @@ export function ProductCardImage({
 }: ProductCardImageProps) {
   return (
     <div
-      className={`relative aspect-product overflow-hidden bg-sand ${className}`}
+      className={`relative aspect-[3/4] overflow-hidden bg-sand w-full ${className}`}
     >
       <img
         src={src}
         alt={alt}
-        className="w-full h-full object-cover transition-transform duration-slow group-hover:scale-103"
+        className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
       />
-      {/* Subtle gradient overlay on hover */}
-      <div className="absolute inset-0 bg-gradient-overlay opacity-0 group-hover:opacity-15 transition-opacity duration-normal" />
+      {/* Cinematic overlay */}
+      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
     </div>
   );
 }
 
-// Product Title
+// Product Quick Add Button - Appears on Hover
+interface ProductCardQuickAddProps {
+  onClick?: () => void;
+  className?: string;
+}
+
+export function ProductCardQuickAdd({
+    onClick,
+    className = "",
+  }: ProductCardQuickAddProps) {
+    return (
+      <button
+        onClick={(e) => {
+          e.stopPropagation();
+          onClick?.();
+        }}
+        className={`absolute bottom-0 left-0 right-0 h-10 bg-alpha text-creme text-xs uppercase tracking-widest font-semibold flex items-center justify-center translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out z-20 ${className}`}
+      >
+        Quick Add
+      </button>
+    );
+  }
+
+// Product Title - Elegant & Understated
 interface ProductCardTitleProps {
   children: ReactNode;
   className?: string;
@@ -61,14 +102,14 @@ export function ProductCardTitle({
 }: ProductCardTitleProps) {
   return (
     <h3
-      className={`text-small font-primary text-text-primary leading-snug mt-3 line-clamp-1 px-3 transition-colors duration-fast group-hover:text-tango ${className}`}
+      className={`text-[1rem] font-primary text-alpha font-semibold leading-tight mt-3 tracking-wide group-hover:underline decoration-1 underline-offset-4 ${className}`}
     >
       {children}
     </h3>
   );
 }
 
-// Product Description (one line)
+// Product Description - Hidden or very subtle
 interface ProductCardDescriptionProps {
   children: ReactNode;
   className?: string;
@@ -80,14 +121,14 @@ export function ProductCardDescription({
 }: ProductCardDescriptionProps) {
   return (
     <p
-      className={`text-caption text-text-secondary leading-snug mt-1 line-clamp-1 px-3 ${className}`}
+      className={`text-xs text-text-muted mt-0.5 font-primary tracking-normal leading-relaxed line-clamp-1 ${className}`}
     >
       {children}
     </p>
   );
 }
 
-// Product Meta (Collection | Category)
+// Product Meta (Collection) - Uppercase kicker
 interface ProductCardMetaProps {
   collection: string;
   category: string;
@@ -101,44 +142,27 @@ export function ProductCardMeta({
 }: ProductCardMetaProps) {
   return (
     <div
-      className={`flex items-center gap-2 mt-2 text-caption text-text-muted tracking-wide px-3 pb-3 ${className}`}
+      className={`flex items-center gap-1.5 mt-1 text-[0.6rem] uppercase tracking-wider text-text-muted/80 ${className}`}
     >
-      <span className="text-sage">{collection}</span>
-      <span className="w-1 h-1 rounded-full bg-border-medium" />
+      <span>{collection}</span>
+      <span className="text-text-muted/30">|</span>
       <span>{category}</span>
     </div>
   );
 }
 
-// Product Price
+// Product Price - REMOVED per user request (Component kept as null for type safety if needed elsewhere, but effectively practically gone)
 interface ProductCardPriceProps {
-  price: string;
+  price?: string;
   originalPrice?: string;
   className?: string;
 }
 
-export function ProductCardPrice({
-  price,
-  originalPrice,
-  className = "",
-}: ProductCardPriceProps) {
-  return (
-    <div
-      className={`flex items-center gap-2 mt-2 px-3 pb-3 ${className}`}
-    >
-      <span className="text-small font-primary text-tango font-medium">
-        {price}
-      </span>
-      {originalPrice && (
-        <span className="text-caption text-text-muted line-through">
-          {originalPrice}
-        </span>
-      )}
-    </div>
-  );
+export function ProductCardPrice({}: ProductCardPriceProps) {
+  return null;
 }
 
-// Product Badge (Sale, New, etc.)
+// Product Badge - Minimalist tags
 interface ProductCardBadgeProps {
   children: ReactNode;
   variant?: "dark" | "light" | "sale" | "new" | "gold" | "eco" | "limited";
@@ -151,16 +175,17 @@ export function ProductCardBadge({
   className = "",
 }: ProductCardBadgeProps) {
   const baseStyles =
-    "absolute top-2 left-2 z-dropdown px-2.5 py-1 rounded-badge text-caption uppercase tracking-wider font-medium";
-
+    "absolute top-0 left-0 z-dropdown px-3 py-1 text-[0.55rem] uppercase tracking-widest font-bold border";
+  
+  // Luxury variants
   const variantStyles = {
-    dark: "bg-charcoal text-text-inverse",
-    light: "bg-ivory/95 text-text-primary border border-border-light backdrop-blur-light shadow-card",
-    sale: "bg-copper text-text-inverse",
-    new: "bg-tango text-text-inverse",
-    gold: "bg-gold text-charcoal",
-    eco: "bg-sage text-charcoal",
-    limited: "bg-blush text-charcoal",
+    dark: "border-transparent bg-alpha text-creme",
+    light: "border-transparent bg-creme text-alpha",
+    sale: "border-transparent bg-tango text-white",
+    new: "border-transparent bg-white text-alpha",
+    gold: "border-transparent bg-gold text-white",
+    eco: "border-transparent bg-sage text-white",
+    limited: "border-alpha bg-transparent text-alpha border-solid",
   };
 
   return (
@@ -170,7 +195,7 @@ export function ProductCardBadge({
   );
 }
 
-// Wishlist Button
+// Wishlist Button - Floating minimalist
 interface ProductCardWishlistProps {
   isActive?: boolean;
   onClick?: () => void;
@@ -188,15 +213,15 @@ export function ProductCardWishlist({
         e.stopPropagation();
         onClick?.();
       }}
-      className={`absolute top-2 right-2 z-dropdown w-8 h-8 flex items-center justify-center rounded-full shadow-card transition-all duration-normal ${
+      className={`absolute top-2 right-2 z-dropdown w-7 h-7 flex items-center justify-center rounded-full transition-all duration-300 ${
         isActive
-          ? "bg-blush text-charcoal shadow-card-hover scale-102"
-          : "bg-ivory/95 backdrop-blur-light text-text-primary hover:bg-wind hover:text-tango hover:shadow-card-hover hover:scale-102"
+          ? "bg-alpha text-creme"
+          : "bg-white/80 backdrop-blur-sm text-alpha hover:bg-alpha hover:text-creme opacity-0 group-hover:opacity-100"
       } ${className}`}
       aria-label="Add to wishlist"
     >
       <svg
-        className="w-4 h-4 transition-transform duration-fast"
+        className="w-3.5 h-3.5"
         fill={isActive ? "currentColor" : "none"}
         stroke="currentColor"
         viewBox="0 0 24 24"
@@ -212,89 +237,7 @@ export function ProductCardWishlist({
   );
 }
 
-// Add to Cart Button (overlay)
-interface ProductCardCartButtonProps {
-  onClick?: () => void;
-  className?: string;
-}
-
-export function ProductCardCartButton({
-  onClick,
-  className = "",
-}: ProductCardCartButtonProps) {
-  return (
-    <div
-      className={`absolute bottom-0 left-0 right-0 p-2 translate-y-full opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-normal ${className}`}
-    >
-      <button
-        onClick={(e) => {
-          e.stopPropagation();
-          onClick?.();
-        }}
-        className="w-full py-2.5 bg-tango text-text-inverse text-caption uppercase tracking-wide font-medium rounded-button shadow-card hover:bg-hover-accent hover:shadow-card-hover transition-all duration-fast flex items-center justify-center gap-2"
-      >
-        <svg
-          className="w-4 h-4"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={1.5}
-            d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
-          />
-        </svg>
-        Add to Cart
-      </button>
-    </div>
-  );
-}
-
-// Quick View Button
-interface ProductCardQuickViewProps {
-  onClick?: () => void;
-  className?: string;
-}
-
-export function ProductCardQuickView({
-  onClick,
-  className = "",
-}: ProductCardQuickViewProps) {
-  return (
-    <button
-      onClick={(e) => {
-        e.stopPropagation();
-        onClick?.();
-      }}
-      className={`absolute bottom-2 right-2 z-dropdown w-8 h-8 flex items-center justify-center rounded-full bg-ivory/95 backdrop-blur-light shadow-card opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-normal hover:bg-wind hover:text-tango hover:shadow-card-hover hover:scale-102 ${className}`}
-      aria-label="Quick view"
-    >
-      <svg
-        className="w-4 h-4 text-text-primary"
-        fill="none"
-        stroke="currentColor"
-        viewBox="0 0 24 24"
-      >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth={1.5}
-          d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-        />
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth={1.5}
-          d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
-        />
-      </svg>
-    </button>
-  );
-}
-
-// Image Container (wraps image with badges, wishlist, cart button)
+// Image Container - Pure wrapper
 interface ProductCardImageContainerProps {
   children: ReactNode;
   className?: string;
@@ -305,30 +248,20 @@ export function ProductCardImageContainer({
   className = "",
 }: ProductCardImageContainerProps) {
   return (
-    <div
-      className={`relative overflow-hidden rounded-t-card ${className}`}
-    >
+    <div className={`relative overflow-hidden ${className}`}>
       {children}
     </div>
   );
 }
 
-// Skeleton loader for product card
-export function ProductCardSkeleton({
-  className = "",
-}: {
-  className?: string;
-}) {
+// Skeleton - Minimalist
+export function ProductCardSkeleton({ className = "" }: { className?: string }) {
   return (
-    <div className={`bg-ivory rounded-card border border-border-light overflow-hidden ${className}`}>
-      <div className="aspect-product bg-gradient-to-br from-sand to-creme animate-pulse" />
-      <div className="p-3 space-y-2">
-        <div className="h-4 bg-sand rounded-badge w-3/4 animate-pulse" />
-        <div className="h-3 bg-sand rounded-badge w-1/2 animate-pulse" />
-        <div className="flex gap-2 pt-1">
-          <div className="h-2 bg-wind/50 rounded-badge w-16 animate-pulse" />
-          <div className="h-2 bg-sand rounded-badge w-12 animate-pulse" />
-        </div>
+    <div className={`space-y-4 ${className}`}>
+      <div className="aspect-[3/4] bg-sand/30 animate-pulse" />
+      <div className="space-y-2 px-1">
+        <div className="h-4 bg-sand/30 w-2/3 animate-pulse" />
+        <div className="h-3 bg-sand/20 w-1/3 animate-pulse" />
       </div>
     </div>
   );

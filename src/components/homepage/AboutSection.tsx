@@ -1,60 +1,79 @@
+"use client";
+
 import Image from "next/image";
 
 export default function AboutSection() {
   return (
-    <section className="bg-creme py-section-mobile md:py-section overflow-hidden">
-      <div className="max-w-content mx-auto px-container">
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-          {/* Left - Image */}
-          <div className="relative">
-            <div className="relative aspect-[4/3] rounded-card overflow-hidden shadow-xl">
+    <section className="bg-creme py-16 md:py-32 border-t border-black/5 relative overflow-hidden">
+      <div className="max-w-[1920px] mx-auto px-4 md:px-12">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-32 items-center">
+          
+          {/* Left - Visual Narrative */}
+          <div className="relative order-2 lg:order-1">
+            <div className="relative aspect-[3/4] md:aspect-[4/5] overflow-hidden group">
+               {/* Main Image */}
               <Image
-                src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=800"
-                alt="Modern living room interior"
+                src="https://images.unsplash.com/photo-1617159784184-25cb4827018c?q=80&w=2600&auto=format&fit=crop"
+                alt="Artisan at work"
                 fill
-                className="object-cover object-center"
+                className="object-cover transition-transform duration-[1.8s] ease-out group-hover:scale-105"
               />
-            </div>
-            {/* Floating accent card */}
-            <div className="absolute -bottom-6 -right-6 md:bottom-8 md:-right-8 bg-white rounded-xl p-5 shadow-lg max-w-[200px]">
-              <p className="text-h3 text-tango font-bold font-secondary">20+</p>
-              <p className="text-small text-text-secondary">Years of Craftsmanship</p>
-            </div>
-            {/* Decorative element */}
-            <div className="absolute -top-4 -left-4 w-24 h-24 border-2 border-tango/20 rounded-2xl -z-10" />
-          </div>
-
-          {/* Right - Content */}
-          <div className="lg:pl-8 px-4 md:px-8 text-center lg:text-center">
-            {/* Section Header */}
-            <div className="mb-6">
-              <div className="flex items-center justify-center gap-3 mb-3">
-                <div className="w-8 h-0.5 bg-tango rounded-full" />
-                <span className="text-caption text-tango uppercase tracking-wider font-medium">
-                  Our Story
-                </span>
+              <div className="absolute inset-0 bg-alpha/5 group-hover:bg-alpha/0 transition-colors duration-700" />
+              
+              {/* Floating Detail Image */}
+              <div className="absolute -bottom-10 -right-10 w-2/3 aspect-square border-8 border-creme overflow-hidden hidden md:block parallax-element">
+                 <Image
+                    src="https://images.unsplash.com/photo-1511192336575-5a79af67a629?q=80&w=800&auto=format&fit=crop"
+                    alt="Wood texture detail"
+                    fill
+                    className="object-cover hover:scale-110 transition-transform duration-700"
+                />
               </div>
-              <h2 className="text-h2 md:text-h1 text-text-primary font-secondary tracking-tight mb-4">
-                Inspire your space through art and design.
-              </h2>
             </div>
-
-            {/* Paragraphs */}
-            <p className="text-body text-text-secondary leading-relaxed mb-5">
-              &ldquo;CAFCO&rdquo; believes that furniture should do more than serve a practical purpose. It should express your personal taste, beautify your surroundings, and make you feel comfortable. We take pleasure in our handiwork and only use the best materials to make things that will last a lifetime.
-            </p>
-            <p className="text-body text-text-secondary leading-relaxed mb-8">
-              Whether you&apos;re looking for contemporary patterns or classic Indian traditions, we have something for everyone. We provide a vast selection of solutions to suit any taste, ranging from warm chairs and couches to chic coffee tables and luxurious bed frames.
-            </p>
-
-            {/* CTA Button */}
-            <button className="inline-flex items-center gap-2 bg-tango text-white px-6 py-3 rounded-full font-medium hover:bg-tango/90 transition-colors">
-              Learn More About Us
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-              </svg>
-            </button>
           </div>
+
+          {/* Right - Editorial Content */}
+          <div className="order-1 lg:order-2 text-left">
+            <div className="animate-slide-up">
+              <span className="block text-xs font-primary uppercase tracking-[0.25em] text-alpha/60 mb-2 flex items-center gap-4">
+                 <span className="w-12 h-[1px] bg-alpha/30"></span>
+                 The Philosophy
+              </span>
+              
+              <h2 className="text-4xl md:text-6xl lg:text-7xl font-secondary text-alpha leading-[0.9] tracking-tight mb-8">
+                Crafting <br />
+                <span className="italic font-light text-alpha/80">Legacy.</span>
+              </h2>
+
+              <blockquote className="text-lg md:text-xl text-alpha/80 font-secondary leading-relaxed mb-8 border-l-2 border-alpha/10 pl-6 italic">
+                "We believe furniture should be more than functional. It should be a tactile expression of art, bringing silence and beauty to the modern home."
+              </blockquote>
+
+              <p className="text-sm font-primary text-alpha/60 leading-loose max-w-md mb-12">
+                Founded in 1985, CAFCO has dedicated decades to the preservation of traditional joinery and the exploration of organic forms. Each piece is a dialogue between the raw material and the artisan's hand, designed to age gracefully alongside generations.
+              </p>
+
+              <div className="flex items-center gap-12">
+                 <div className="flex flex-col">
+                    <span className="text-3xl font-secondary">1985</span>
+                    <span className="text-[0.6rem] uppercase tracking-widest text-alpha/50 mt-1">Established</span>
+                 </div>
+                 <div className="flex flex-col">
+                    <span className="text-3xl font-secondary">40+</span>
+                    <span className="text-[0.6rem] uppercase tracking-widest text-alpha/50 mt-1">Artisans</span>
+                 </div>
+              </div>
+
+              <div className="mt-12">
+                <a href="/about" className="inline-flex items-center gap-3 text-xs uppercase tracking-widest font-semibold border-b border-alpha pb-1 hover:text-tango hover:border-tango transition-colors duration-300">
+                  Read Our Story
+                  <span className="transform transition-transform duration-300 group-hover:translate-x-1">→</span>
+                </a>
+              </div>
+
+            </div>
+          </div>
+
         </div>
       </div>
     </section>

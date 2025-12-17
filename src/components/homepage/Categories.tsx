@@ -73,52 +73,40 @@ function DesktopCategoryCard({ category }: { category: Category }) {
   return (
     <a
       href={`/category/${category.name.toLowerCase().replace(" ", "-")}`}
-      className={`group relative overflow-hidden rounded-card cursor-pointer ${category.gridClass} min-h-[240px]`}
+      className={`group relative overflow-hidden cursor-pointer ${category.gridClass} min-h-[300px] border border-transparent hover:border-text-inverse/20 transition-colors duration-500`}
     >
       <div className="absolute inset-0">
         <Image
           src={category.image}
           alt={category.name}
           fill
-          className="object-cover transition-transform duration-slow group-hover:scale-103"
+          className="object-cover transition-transform duration-[800ms] ease-out group-hover:scale-105"
           sizes="(max-width: 768px) 50vw, 33vw"
         />
       </div>
-      <div className="absolute inset-0 bg-gradient-to-t from-alpha/70 via-alpha/20 to-transparent transition-all duration-normal group-hover:from-alpha/80" />
-      <div className="absolute inset-0 flex flex-col justify-end p-6">
-        <h3 className="text-h3 md:text-h2 font-secondary font-bold text-text-inverse tracking-tight transition-transform duration-normal group-hover:-translate-y-1">
+      <div className="absolute inset-0 bg-gradient-to-t from-alpha/90 via-alpha/10 to-transparent transition-all duration-500 group-hover:via-alpha/20" />
+      <div className="absolute bottom-0 left-0 right-0 p-8 transform translate-y-2 transition-transform duration-500 ease-out group-hover:translate-y-0 text-center">
+        <h3 className="text-3xl md:text-4xl font-secondary text-text-inverse tracking-tight mb-2">
           {category.name}
         </h3>
-        <p className="text-small text-text-inverse/80 mt-1 opacity-0 translate-y-2 transition-all duration-normal group-hover:opacity-100 group-hover:translate-y-0">
-          {category.caption}
+        <div className="h-[1px] w-0 mx-auto bg-text-inverse group-hover:w-16 transition-all duration-500 ease-out" />
+        <p className="text-sm text-text-inverse/80 mt-3 font-primary uppercase tracking-widest opacity-0 transform translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500 delay-100">
+          Explore Collection
         </p>
-        <div className="flex items-center gap-1 mt-3 opacity-0 translate-y-2 transition-all duration-normal delay-75 group-hover:opacity-100 group-hover:translate-y-0">
-          <span className="text-caption text-text-inverse/90 uppercase tracking-wider font-medium">
-            Explore
-          </span>
-          <svg
-            className="w-4 h-4 text-text-inverse/90 transition-transform duration-fast group-hover:translate-x-1"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 5l7 7-7 7" />
-          </svg>
-        </div>
       </div>
-      <div className="absolute inset-0 rounded-card border border-transparent transition-colors duration-normal group-hover:border-text-inverse/20" />
     </a>
   );
 }
 
 // Mobile card - compact with visible content
+// Mobile card - compact with visible content
 function MobileCategoryCard({ category }: { category: Category }) {
   return (
     <a
       href={`/category/${category.name.toLowerCase().replace(" ", "-")}`}
-      className="group block relative overflow-hidden rounded-card"
+      className="group block relative overflow-hidden"
     >
-      <div className="relative aspect-[4/3] w-full">
+      <div className="relative aspect-[3/4] w-full">
         <Image
           src={category.image}
           alt={category.name}
@@ -126,13 +114,13 @@ function MobileCategoryCard({ category }: { category: Category }) {
           className="object-cover transition-transform duration-normal group-active:scale-105"
           sizes="50vw"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-alpha/80 via-alpha/30 to-transparent" />
-        <div className="absolute bottom-0 left-0 right-0 p-3">
-          <h3 className="text-body font-secondary font-bold text-text-inverse leading-tight">
+        <div className="absolute inset-0 bg-gradient-to-t from-alpha/80 via-transparent to-transparent" />
+        <div className="absolute bottom-0 left-0 right-0 p-4 text-center">
+          <h3 className="text-xl font-secondary text-text-inverse leading-none tracking-tight mb-1">
             {category.name}
           </h3>
-          <p className="text-caption text-text-inverse/70 mt-0.5">
-            {category.caption}
+          <p className="text-[0.6rem] uppercase tracking-widest text-text-inverse/70">
+            View Collection
           </p>
         </div>
       </div>
@@ -142,38 +130,22 @@ function MobileCategoryCard({ category }: { category: Category }) {
 
 export default function Categories() {
   return (
-    <section className="bg-creme py-section-mobile md:py-section">
-      {/* Section Header */}
-      <div className="max-w-content mx-auto px-4 mb-5 md:mb-8">
-        <div className="flex items-end justify-between">
-          <div className="animate-slide-up">
-            <p className="text-caption text-text-muted uppercase tracking-wider mb-2">
-              Browse by
-            </p>
-            <h2 className="text-h2 md:text-h1 text-text-primary font-secondary font-bold uppercase tracking-tight">
-              Categories
-            </h2>
-          </div>
-          <a
-            href="/categories"
-            className="hidden md:flex items-center gap-2 px-4 py-2 text-small text-tango border border-tango rounded-button hover:bg-tango hover:text-text-inverse transition-all duration-fast tracking-wide group"
-          >
-            View All
-            <svg
-              className="w-4 h-4 transition-transform duration-fast group-hover:translate-x-1"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 5l7 7-7 7" />
-            </svg>
-          </a>
+    <section className="bg-creme py-12 md:py-20 border-t border-black/5">
+      {/* Editorial Header */}
+      <div className="max-w-[1440px] mx-auto px-4 mb-8 text-center">
+        <div className="animate-slide-up">
+          <p className="text-xs font-primary uppercase tracking-[0.2em] text-alpha/60 mb-1.5">
+            Curated Spaces
+          </p>
+          <h2 className="text-3xl md:text-5xl text-alpha font-secondary font-medium tracking-tight">
+            Shop by Category
+          </h2>
         </div>
       </div>
 
       {/* Mobile: 2-column grid */}
-      <div className="md:hidden px-4">
-        <div className="grid grid-cols-2 gap-3">
+      <div className="md:hidden px-2">
+        <div className="grid grid-cols-2 gap-1.5">
           {categories.map((category) => (
             <MobileCategoryCard key={category.id} category={category} />
           ))}
@@ -194,8 +166,8 @@ export default function Categories() {
       </div>
 
       {/* Desktop: Bento Grid */}
-      <div className="hidden md:block max-w-content mx-auto px-4">
-        <div className="grid grid-cols-4 gap-4 animate-fade-in">
+      <div className="hidden md:block max-w-[1920px] mx-auto px-4">
+        <div className="grid grid-cols-4 gap-2 animate-fade-in">
           {categories.map((category) => (
             <DesktopCategoryCard key={category.id} category={category} />
           ))}

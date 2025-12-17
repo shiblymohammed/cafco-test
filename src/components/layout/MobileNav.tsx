@@ -5,10 +5,16 @@ import MenuAnimation from "./menu/menuanimation";
 import CartIcon from "./menu/carticon";
 import SearchIcon from "./menu/searchicon";
 import WishlistIcon from "./menu/wishlisticon";
+import SearchModal from "./modals/SearchModal";
+import CartDrawer from "./modals/CartDrawer";
+import WishlistDrawer from "./modals/WishlistDrawer";
 
 export default function MobileNav() {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [isCartOpen, setIsCartOpen] = useState(false);
+  const [isWishlistOpen, setIsWishlistOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -28,7 +34,7 @@ export default function MobileNav() {
           {/* Hamburger Button - Square */}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className={`h-12 w-14 flex items-center justify-center relative overflow-hidden ${isScrolled ? "text-alpha border-r border-alpha/10" : "text-creme"
+            className={`h-12 w-14 flex items-center justify-center relative overflow-hidden ${isScrolled ? "text-alpha border-r border-alpha/50" : "text-creme"
               }`}
             style={{
               transition: 'color 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
@@ -49,6 +55,7 @@ export default function MobileNav() {
 
           {/* Search Button - Square */}
           <button
+            onClick={() => setIsSearchOpen(true)}
             className={`h-12 w-14 flex items-center justify-center relative overflow-hidden ${isScrolled ? "text-alpha" : "text-creme"
               }`}
             style={{
@@ -70,7 +77,7 @@ export default function MobileNav() {
 
           {/* Logo Button - Rectangle (flex-1 to fill remaining space) */}
           <button
-            className={`h-12 flex-1 flex items-center justify-center text-3xl font-['brand-primary'] relative overflow-hidden ${isScrolled ? "text-alpha border-l border-r border-alpha/10" : "text-creme"
+            className={`h-12 flex-1 flex items-center justify-center text-3xl font-['brand-primary'] relative overflow-hidden ${isScrolled ? "text-alpha border-l border-r border-alpha/50" : "text-creme"
               }`}
             style={{
               transition: 'color 0.4s cubic-bezier(0.4, 0, 0.2, 1) 0.06s',
@@ -91,6 +98,7 @@ export default function MobileNav() {
 
           {/* Wishlist Button - Square */}
           <button
+            onClick={() => setIsWishlistOpen(true)}
             className={`h-12 w-14 flex items-center justify-center relative overflow-hidden ${isScrolled ? "text-alpha" : "text-creme"
               }`}
             style={{
@@ -112,7 +120,8 @@ export default function MobileNav() {
 
           {/* Cart Button - Square */}
           <button
-            className={`h-12 w-14 flex items-center justify-center relative overflow-hidden ${isScrolled ? "text-alpha border-l border-alpha/10" : "text-creme"
+            onClick={() => setIsCartOpen(true)}
+            className={`h-12 w-14 flex items-center justify-center relative overflow-hidden ${isScrolled ? "text-alpha border-l border-alpha/50" : "text-creme"
               }`}
             style={{
               transition: 'color 0.5s cubic-bezier(0.4, 0, 0.2, 1) 0.12s',
@@ -157,6 +166,11 @@ export default function MobileNav() {
           <a href="/contact" className="text-lg">Contact</a>
         </nav>
       </div>
+
+       {/* Modals */}
+       <SearchModal isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />
+       <CartDrawer isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
+       <WishlistDrawer isOpen={isWishlistOpen} onClose={() => setIsWishlistOpen(false)} />
     </>
   );
 }
