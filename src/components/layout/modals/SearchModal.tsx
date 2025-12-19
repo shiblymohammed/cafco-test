@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useLayoutEffect } from "react";
 
 interface SearchModalProps {
   isOpen: boolean;
@@ -11,9 +11,15 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
   const [isVisible, setIsVisible] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  useEffect(() => {
+  // Use useLayoutEffect for synchronous visibility updates to avoid cascading renders
+  useLayoutEffect(() => {
     if (isOpen) {
       setIsVisible(true);
+    }
+  }, [isOpen]);
+
+  useEffect(() => {
+    if (isOpen) {
       document.body.style.overflow = "hidden";
       // Focus input after animation
       setTimeout(() => {

@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useLayoutEffect } from "react";
+import Link from "next/link";
 import MenuAnimation from "./menu/menuanimation";
 import CartIcon from "./menu/carticon";
 import SearchIcon from "./menu/searchicon";
@@ -159,11 +160,11 @@ export default function MobileNav() {
         onClick={(e) => e.stopPropagation()}
       >
         <nav className="flex flex-col gap-4">
-          <a href="/" className="text-lg">Home</a>
-          <a href="/about" className="text-lg">About</a>
-          <a href="/categories" className="text-lg">Categories</a>
-          <a href="/collections" className="text-lg">Collections</a>
-          <a href="/contact" className="text-lg">Contact</a>
+          <Link href="/" className="text-lg">Home</Link>
+          <Link href="/about" className="text-lg">About</Link>
+          <Link href="/categories" className="text-lg">Categories</Link>
+          <Link href="/collections" className="text-lg">Collections</Link>
+          <Link href="/contact" className="text-lg">Contact</Link>
         </nav>
       </div>
 

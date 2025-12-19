@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useLayoutEffect } from "react";
 
 interface WishlistDrawerProps {
   isOpen: boolean;
@@ -11,9 +11,15 @@ interface WishlistDrawerProps {
 export default function WishlistDrawer({ isOpen, onClose }: WishlistDrawerProps) {
   const [isVisible, setIsVisible] = useState(false);
 
-  useEffect(() => {
+  // Use useLayoutEffect for synchronous visibility updates to avoid cascading renders
+  useLayoutEffect(() => {
     if (isOpen) {
       setIsVisible(true);
+    }
+  }, [isOpen]);
+
+  useEffect(() => {
+    if (isOpen) {
       document.body.style.overflow = "hidden";
     } else {
       const timer = setTimeout(() => setIsVisible(false), 300);

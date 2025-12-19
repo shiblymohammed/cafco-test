@@ -15,7 +15,7 @@ export default function MobileFooter() {
             Designing spaces
           </div>
           <div className="text-xs text-text-muted font-light leading-relaxed">
-            you'll love to live in
+            you&apos;ll love to live in
           </div>
         </div>
 

@@ -38,7 +38,7 @@ export default function MagneticButton({
       animate={{ x, y }}
       transition={{ type: "spring", stiffness: 150, damping: 15, mass: 0.1 }}
       className={cn("cursor-pointer", className)}
-      {...props as any}
+      {...(props as React.ComponentProps<typeof motion.div>)}
     >
       {children}
     </motion.div>

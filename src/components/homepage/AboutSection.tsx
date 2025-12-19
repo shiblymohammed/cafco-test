@@ -46,11 +46,11 @@ export default function AboutSection() {
               </h2>
 
               <blockquote className="text-lg md:text-xl text-alpha/80 font-secondary leading-relaxed mb-8 border-l-2 border-alpha/10 pl-6 italic">
-                "We believe furniture should be more than functional. It should be a tactile expression of art, bringing silence and beauty to the modern home."
+                &ldquo;We believe furniture should be more than functional. It should be a tactile expression of art, bringing silence and beauty to the modern home.&rdquo;
               </blockquote>
 
               <p className="text-sm font-primary text-alpha/60 leading-loose max-w-md mb-12">
-                Founded in 1985, CAFCO has dedicated decades to the preservation of traditional joinery and the exploration of organic forms. Each piece is a dialogue between the raw material and the artisan's hand, designed to age gracefully alongside generations.
+                Founded in 1985, CAFCO has dedicated decades to the preservation of traditional joinery and the exploration of organic forms. Each piece is a dialogue between the raw material and the artisan&apos;s hand, designed to age gracefully alongside generations.
               </p>
 
               <div className="flex items-center gap-12">
