@@ -82,16 +82,6 @@ function StarIcon({ filled }: { filled: boolean }) {
   );
 }
 
-// Rotation patterns for desktop cards
-const rotations = [
-  "sm:rotate-[-2deg]",
-  "sm:rotate-[1.5deg]",
-  "sm:rotate-[-1deg]",
-  "sm:rotate-[2deg]",
-  "sm:rotate-[-1.5deg]",
-  "sm:rotate-[1deg]",
-];
-
 function TestimonialCard({
   name,
   review,
@@ -103,11 +93,9 @@ function TestimonialCard({
   rating: number;
   index?: number;
 }) {
-  const rotation = rotations[index % rotations.length];
-
   return (
     <div
-      className={`bg-ivory rounded-card p-7 shadow-card hover:shadow-card-hover transition-all duration-normal hover:-translate-y-1 hover:rotate-0 h-full ${rotation}`}
+      className="bg-ivory rounded-card p-7 shadow-card hover:shadow-card-hover transition-all duration-normal hover:-translate-y-1 h-full"
     >
       <QuoteIcon />
       <div className="flex gap-1 mb-4">
@@ -215,7 +203,7 @@ export default function Testimonial() {
     <section className="bg-creme py-section-mobile md:py-section overflow-hidden">
       <div className="max-w-content mx-auto">
         {/* Section Header */}
-        <div className="px-container mb-8 md:mb-10">
+        <div className="px-container mb-10 md:mb-16">
           <div className="animate-slide-up">
             {/* Accent line */}
             <div className="flex items-center gap-3 mb-3">

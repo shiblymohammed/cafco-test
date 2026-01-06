@@ -25,8 +25,8 @@ const config: Config = {
         sand: "#DEDBD6",       // Darker Travertine
         charcoal: "#302F2D",   // Lighter Obsidian for cards
 
-        // === FUNCTIONAL / UI ===
         hover: {
+          // === FUNCTIONAL / UI ===
           light: "#E1DFDA",    // Subtle interaction on creme
           dark: "#1A1918",     // Deepest interaction
           accent: "#38342E",   // Darker Bronze

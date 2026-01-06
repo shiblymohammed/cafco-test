@@ -6,74 +6,62 @@ interface Category {
   name: string;
   caption: string;
   image: string;
-  gridClass: string;
+  isLarge?: boolean;
 }
 
 const categories: Category[] = [
   {
     id: 1,
-    name: "Living Room",
+    name: "Sofas",
     caption: "Sofas, armchairs & more",
     image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=800&h=600&fit=crop",
-    gridClass: "md:col-span-2 md:row-span-2",
+    isLarge: true,
   },
   {
     id: 2,
-    name: "Bedroom",
-    caption: "Rest in style",
-    image: "https://images.unsplash.com/photo-1616594039964-ae9021a400a0?w=600&h=400&fit=crop",
-    gridClass: "md:col-span-1 md:row-span-1",
+    name: "Tables",
+    caption: "Dining & side tables",
+    image: "https://images.unsplash.com/photo-1617806118233-18e1de247200?w=600&h=400&fit=crop",
   },
   {
     id: 3,
-    name: "Dining",
-    caption: "Tables & chairs",
-    image: "https://images.unsplash.com/photo-1617806118233-18e1de247200?w=600&h=400&fit=crop",
-    gridClass: "md:col-span-1 md:row-span-1",
+    name: "Coffee Tables",
+    caption: "Center pieces",
+    image: "https://images.unsplash.com/photo-1616594039964-ae9021a400a0?w=600&h=400&fit=crop",
   },
   {
     id: 4,
-    name: "Office",
-    caption: "Work from home essentials",
+    name: "Chairs",
+    caption: "Seating solutions",
     image: "https://images.unsplash.com/photo-1518455027359-f3f8164ba6bd?w=600&h=400&fit=crop",
-    gridClass: "md:col-span-1 md:row-span-1",
   },
   {
     id: 5,
-    name: "Outdoor",
-    caption: "Patio & garden furniture",
-    image: "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=600&h=400&fit=crop",
-    gridClass: "md:col-span-1 md:row-span-1",
-  },
-  {
-    id: 6,
     name: "Storage",
     caption: "Organize beautifully",
     image: "https://images.unsplash.com/photo-1595428774223-ef52624120d2?w=800&h=600&fit=crop",
-    gridClass: "md:col-span-2 md:row-span-1",
+  },
+  {
+    id: 6,
+    name: "Rugs",
+    caption: "Floor coverings",
+    image: "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=600&h=400&fit=crop",
   },
   {
     id: 7,
-    name: "Lighting",
+    name: "Lamps",
     caption: "Illuminate your space",
     image: "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?w=600&h=400&fit=crop",
-    gridClass: "md:col-span-1 md:row-span-1",
-  },
-  {
-    id: 8,
-    name: "Decor",
-    caption: "Finishing touches",
-    image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=600&h=400&fit=crop",
-    gridClass: "md:col-span-1 md:row-span-1",
   },
 ];
 
 // Desktop bento card with hover effects
-function DesktopCategoryCard({ category }: { category: Category }) {
+function DesktopCategoryCard({ category, isLarge = false }: { category: Category; isLarge?: boolean }) {
   return (
     <a
       href={`/category/${category.name.toLowerCase().replace(" ", "-")}`}
-      className={`group relative overflow-hidden cursor-pointer ${category.gridClass} min-h-[300px] border border-transparent hover:border-text-inverse/20 transition-colors duration-500`}
+      className={`group relative overflow-hidden cursor-pointer ${isLarge ? "row-span-2" : ""
+        }`}
     >
       <div className="absolute inset-0">
         <Image
@@ -81,18 +69,14 @@ function DesktopCategoryCard({ category }: { category: Category }) {
           alt={category.name}
           fill
           className="object-cover transition-transform duration-[800ms] ease-out group-hover:scale-105"
-          sizes="(max-width: 768px) 50vw, 33vw"
+          sizes={isLarge ? "(max-width: 768px) 100vw, 25vw" : "(max-width: 768px) 50vw, 25vw"}
         />
       </div>
-      <div className="absolute inset-0 bg-gradient-to-t from-alpha/90 via-alpha/10 to-transparent transition-all duration-500 group-hover:via-alpha/20" />
-      <div className="absolute bottom-0 left-0 right-0 p-8 transform translate-y-2 transition-transform duration-500 ease-out group-hover:translate-y-0 text-center">
-        <h3 className="text-3xl md:text-4xl font-secondary text-text-inverse tracking-tight mb-2">
+      <div className="absolute inset-0 bg-gradient-to-t from-alpha/70 via-alpha/20 to-transparent transition-all duration-500 group-hover:via-alpha/30" />
+      <div className="absolute inset-0 flex items-center justify-center">
+        <h3 className="text-xl md:text-2xl font-secondary text-text-inverse tracking-tight uppercase">
           {category.name}
         </h3>
-        <div className="h-[1px] w-0 mx-auto bg-text-inverse group-hover:w-16 transition-all duration-500 ease-out" />
-        <p className="text-sm text-text-inverse/80 mt-3 font-primary uppercase tracking-widest opacity-0 transform translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500 delay-100">
-          Explore Collection
-        </p>
       </div>
     </a>
   );
@@ -132,7 +116,7 @@ export default function Categories() {
   return (
     <section className="bg-creme py-12 md:py-20 border-t border-black/5">
       {/* Editorial Header */}
-      <div className="max-w-[1440px] mx-auto px-4 mb-8 text-center">
+      <div className="max-w-[1440px] mx-auto px-4 mb-10 md:mb-16 text-center">
         <div className="animate-slide-up">
           <p className="text-xs font-primary uppercase tracking-[0.2em] text-alpha/60 mb-1.5">
             Curated Spaces
@@ -150,7 +134,7 @@ export default function Categories() {
             <MobileCategoryCard key={category.id} category={category} />
           ))}
         </div>
-        
+
         {/* Mobile View All Button */}
         <div className="flex justify-center mt-5">
           <a
@@ -165,10 +149,14 @@ export default function Categories() {
         </div>
       </div>
 
-      {/* Desktop: Bento Grid */}
-      <div className="hidden md:block max-w-[1920px] mx-auto px-4">
-        <div className="grid grid-cols-4 gap-2 animate-fade-in">
-          {categories.map((category) => (
+      {/* Desktop: Bento Grid - 1 large left + 6 small right */}
+      <div className="hidden md:block px-4">
+        <div className="grid grid-cols-4 grid-rows-2 gap-4 animate-fade-in" style={{ height: "750px" }}>
+          {/* Large tile on the left spanning 2 rows */}
+          <DesktopCategoryCard category={categories[0]} isLarge={true} />
+
+          {/* 6 smaller tiles in a 3x2 grid on the right */}
+          {categories.slice(1).map((category) => (
             <DesktopCategoryCard key={category.id} category={category} />
           ))}
         </div>

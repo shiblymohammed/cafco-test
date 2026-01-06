@@ -4,7 +4,7 @@ import Image from "next/image";
 
 export default function AboutSection() {
   return (
-    <section className="bg-creme py-16 md:py-32 border-t border-black/5 relative overflow-hidden">
+    <section className="bg-creme py-16 md:py-32 relative overflow-hidden">
       <div className="max-w-[1920px] mx-auto px-4 md:px-12">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-32 items-center">
           
@@ -13,7 +13,7 @@ export default function AboutSection() {
             <div className="relative aspect-[3/4] md:aspect-[4/5] overflow-hidden group">
                {/* Main Image */}
               <Image
-                src="https://images.unsplash.com/photo-1617159784184-25cb4827018c?q=80&w=2600&auto=format&fit=crop"
+                src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?q=80&w=2600&auto=format&fit=crop"
                 alt="Artisan at work"
                 fill
                 className="object-cover transition-transform duration-[1.8s] ease-out group-hover:scale-105"
@@ -40,7 +40,7 @@ export default function AboutSection() {
                  The Philosophy
               </span>
               
-              <h2 className="text-4xl md:text-6xl lg:text-7xl font-secondary text-alpha leading-[0.9] tracking-tight mb-8">
+              <h2 className="text-4xl md:text-6xl lg:text-7xl font-secondary text-alpha leading-[0.9] tracking-tight mb-10 md:mb-16">
                 Crafting <br />
                 <span className="italic font-light text-alpha/80">Legacy.</span>
               </h2>

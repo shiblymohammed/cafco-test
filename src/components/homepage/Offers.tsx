@@ -9,7 +9,7 @@ const offers = [
     title: "Privileged Access",
     description: "Join CAFCO Membership for early access to new arrivals and exclusive seasonal archiving sales.",
     action: "Join Now",
-    image: "https://images.unsplash.com/photo-1596700683056-b7ff83f94ec6?q=80&w=800&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?q=80&w=800&auto=format&fit=crop",
   },
   {
     id: 2,
@@ -31,40 +31,41 @@ const offers = [
 
 export default function Offers() {
   return (
-    <section className="bg-creme border-t border-b border-alpha/10">
-      <div className="max-w-[1920px] mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-alpha/10">
+    <section className="bg-creme py-4 md:py-8">
+      <div className="max-w-[1920px] mx-auto px-4 md:px-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
           {offers.map((offer) => (
             <div key={offer.id} className="group relative h-[60vh] md:h-[70vh] flex flex-col justify-between p-8 md:p-12 overflow-hidden cursor-pointer">
-              
-              {/* Content Layer (Top) */}
-              <div className="relative z-20 transition-colors duration-500 group-hover:text-creme">
-                <span className="inline-block text-[0.6rem] font-primary uppercase tracking-[0.25em] mb-4 text-alpha/60 group-hover:text-creme/60 transition-colors duration-500">
-                  {offer.label}
-                </span>
-                <h3 className="text-3xl md:text-4xl font-secondary font-medium leading-[1.1] transition-colors duration-500">
-                  {offer.title}
-                </h3>
-              </div>
 
-               {/* Image Background Layer (Reveals on Hover) */}
-               <div className="absolute inset-0 z-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 ease-in-out">
-                <div className="absolute inset-0 bg-alpha/40 z-10" /> {/* Overlay for text readability */}
+              {/* Image Background Layer (Always Visible) */}
+              <div className="absolute inset-0 z-0 overflow-hidden">
                 <Image
                   src={offer.image}
                   alt={offer.title}
                   fill
-                  className="object-cover transform scale-105 group-hover:scale-100 transition-transform duration-[1.5s] ease-out"
+                  className="object-cover transition-transform duration-700 ease-out group-hover:scale-110"
                 />
+                {/* Black overlay that appears on hover */}
+                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-all duration-500 ease-out z-10" />
+              </div>
+
+              {/* Content Layer (Top) */}
+              <div className="relative z-20 text-creme">
+                <span className="inline-block text-[0.6rem] font-primary uppercase tracking-[0.25em] mb-4 text-creme/70">
+                  {offer.label}
+                </span>
+                <h3 className="text-3xl md:text-4xl font-secondary font-medium leading-[1.1]">
+                  {offer.title}
+                </h3>
               </div>
 
               {/* Action Layer (Bottom) */}
-              <div className="relative z-20 mt-auto">
-                <p className="text-sm font-primary leading-relaxed max-w-xs mb-8 text-alpha/70 group-hover:text-creme/80 transition-colors duration-500">
+              <div className="relative z-20 mt-auto text-creme">
+                <p className="text-sm font-primary leading-relaxed max-w-xs mb-8 text-creme/80">
                   {offer.description}
                 </p>
-                
-                <div className="inline-flex items-center gap-3 text-xs uppercase tracking-widest font-semibold border-b border-alpha/30 pb-1 group-hover:text-creme group-hover:border-creme/50 transition-colors duration-500">
+
+                <div className="inline-flex items-center gap-3 text-xs uppercase tracking-widest font-semibold border-b border-creme/50 pb-1">
                   {offer.action}
                   <span className="transform group-hover:translate-x-1 transition-transform duration-300">→</span>
                 </div>
