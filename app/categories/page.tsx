@@ -33,7 +33,7 @@ export default function CategoriesPage() {
       {featuredCategory && (
         <section className="py-12 md:py-20">
           <div className="max-w-[1440px] mx-auto px-4 md:px-12">
-            <Link href={`/category/${featuredCategory.name.toLowerCase().replace(/ /g, "-")}`} className="group block">
+            <Link href={`/category/${featuredCategory.name.toLowerCase().replace(/ /g, "-")}`} className="group block" prefetch>
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
                 <div className="relative aspect-[4/3] lg:aspect-[4/5] overflow-hidden">
                   <Image src={featuredCategory.image} alt={featuredCategory.name} fill className="object-cover transition-transform duration-700 group-hover:scale-105" />
@@ -140,8 +140,9 @@ export default function CategoriesPage() {
 
 
 function CategoryCard({ category, isLarge = false }: { category: Category; isLarge?: boolean }) {
+  const categorySlug = category.name.toLowerCase().replace(/ /g, "-");
   return (
-    <Link href={`/category/${category.name.toLowerCase().replace(/ /g, "-")}`} className={`group relative overflow-hidden ${isLarge ? "row-span-2" : ""}`}>
+    <Link href={`/category/${categorySlug}`} className={`group relative overflow-hidden ${isLarge ? "row-span-2" : ""}`}>
       <div className="absolute inset-0">
         <Image src={category.image} alt={category.name} fill className="object-cover transition-transform duration-700 group-hover:scale-105" />
       </div>
@@ -158,8 +159,9 @@ function CategoryCard({ category, isLarge = false }: { category: Category; isLar
 }
 
 function MobileCategoryCard({ category }: { category: Category }) {
+  const categorySlug = category.name.toLowerCase().replace(/ /g, "-");
   return (
-    <Link href={`/category/${category.name.toLowerCase().replace(/ /g, "-")}`} className="group block relative overflow-hidden">
+    <Link href={`/category/${categorySlug}`} className="group block relative overflow-hidden">
       <div className="relative aspect-[3/4] w-full">
         <Image src={category.image} alt={category.name} fill className="object-cover transition-transform duration-normal group-active:scale-105" />
         <div className="absolute inset-0 bg-gradient-to-t from-alpha/80 via-transparent to-transparent" />

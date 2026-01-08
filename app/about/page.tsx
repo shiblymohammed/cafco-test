@@ -169,22 +169,22 @@ export default function AboutPage() {
               The passionate individuals behind every piece of furniture we create.
             </p>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-10">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8">
             {teamMembers.map((member, index) => (
               <div key={index} className="group">
-                <div className="relative aspect-[3/4] overflow-hidden mb-5">
+                <div className="relative aspect-square overflow-hidden mb-4">
                   <Image
                     src={member.image}
                     alt={member.name}
                     fill
                     className="object-cover transition-transform duration-700 group-hover:scale-105"
                   />
-                  <div className="absolute inset-0 bg-alpha/10 group-hover:bg-alpha/0 transition-colors duration-500" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-alpha/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 </div>
-                <h3 className="text-lg font-secondary text-alpha group-hover:text-tango transition-colors duration-300">
+                <h3 className="text-sm md:text-lg font-secondary text-alpha group-hover:text-tango transition-colors duration-300 leading-tight">
                   {member.name}
                 </h3>
-                <p className="text-xs font-primary uppercase tracking-wider text-alpha/50 mt-1">
+                <p className="text-[10px] md:text-xs font-primary uppercase tracking-wider text-alpha/50 mt-0.5 md:mt-1">
                   {member.role}
                 </p>
               </div>

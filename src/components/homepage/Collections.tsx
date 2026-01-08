@@ -37,7 +37,7 @@ function CollectionCard({ collection }: { collection: Collection }) {
   return (
     <a
       href={`/collections/${collection.title.toLowerCase().replace(/ /g, "-")}`}
-      className="group relative block overflow-hidden aspect-[4/5] md:aspect-[3/4]  cursor-pointer"
+      className="group relative block overflow-hidden aspect-[16/9] sm:aspect-[4/5] md:aspect-[3/4] cursor-pointer"
     >
       <Image
         src={collection.image}
@@ -76,9 +76,9 @@ function CollectionCard({ collection }: { collection: Collection }) {
 
 export default function Collections() {
   return (
-    <section className="bg-creme py-12 md:py-20 border-t border-black/5">
+    <section className="bg-creme py-8 sm:py-12 md:py-20 border-t border-black/5">
       {/* Header */}
-      <div className="max-w-[1440px] mx-auto px-4 mb-10 md:mb-16 text-center">
+      <div className="max-w-[1440px] mx-auto px-4 mb-6 sm:mb-10 md:mb-16 text-center">
         <p className="text-xs font-primary uppercase tracking-[0.2em] text-alpha/60 mb-1.5">
           Seasonal Edits
         </p>
@@ -89,10 +89,29 @@ export default function Collections() {
 
       {/* Grid Layout */}
       <div className="max-w-[1440px] mx-auto px-4">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 md:gap-6">
           {collections.map((collection) => (
             <CollectionCard key={collection.id} collection={collection} />
           ))}
+        </div>
+
+        {/* View All Link */}
+        <div className="text-center mt-6 sm:mt-8 md:mt-12">
+          <a
+            href="/collections"
+            className="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-alpha/80 hover:text-alpha border-b border-alpha/30 hover:border-alpha pb-0.5 transition-colors duration-300"
+          >
+            View All Collections
+            <svg
+              className="w-3 h-3 transition-transform duration-300 group-hover:translate-x-1"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth={2}
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+            </svg>
+          </a>
         </div>
       </div>
     </section>

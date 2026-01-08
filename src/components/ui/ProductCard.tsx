@@ -1,9 +1,6 @@
 import { ReactNode } from "react";
-
-// Main ProductCard container - Minimalist & Premium
-
-// Main ProductCard container - Minimalist & Premium
 import Link from "next/link";
+import Image from "next/image";
 
 interface ProductCardProps {
   children: ReactNode;
@@ -56,10 +53,12 @@ export function ProductCardImage({
     <div
       className={`relative aspect-[3/4] overflow-hidden bg-sand w-full ${className}`}
     >
-      <img
+      <Image
         src={src}
         alt={alt}
-        className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+        fill
+        sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+        className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
       />
       {/* Cinematic overlay */}
       <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
@@ -102,7 +101,7 @@ export function ProductCardTitle({
 }: ProductCardTitleProps) {
   return (
     <h3
-      className={`text-[1rem] font-primary text-alpha font-semibold leading-tight mt-3 tracking-wide group-hover:underline decoration-1 underline-offset-4 ${className}`}
+      className={`text-sm md:text-[1rem] font-primary text-alpha font-semibold leading-tight tracking-wide group-hover:underline decoration-1 underline-offset-4 ${className}`}
     >
       {children}
     </h3>
@@ -121,7 +120,7 @@ export function ProductCardDescription({
 }: ProductCardDescriptionProps) {
   return (
     <p
-      className={`text-xs text-text-muted mt-0.5 font-primary tracking-normal leading-relaxed line-clamp-1 ${className}`}
+      className={`text-xs text-alpha/60 mt-0.5 font-primary tracking-normal leading-relaxed line-clamp-1 ${className}`}
     >
       {children}
     </p>
@@ -142,10 +141,10 @@ export function ProductCardMeta({
 }: ProductCardMetaProps) {
   return (
     <div
-      className={`flex items-center gap-1.5 mt-1 text-[0.6rem] uppercase tracking-wider text-text-muted/80 ${className}`}
+      className={`flex items-center gap-1.5 mt-1 text-[0.55rem] md:text-[0.6rem] uppercase tracking-wider text-alpha/50 ${className}`}
     >
       <span>{collection}</span>
-      <span className="text-text-muted/30">|</span>
+      <span className="text-alpha/30">|</span>
       <span>{category}</span>
     </div>
   );

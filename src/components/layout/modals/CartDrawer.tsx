@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useState, useLayoutEffect } from "react";
 
 interface CartDrawerProps {
@@ -141,9 +142,13 @@ export default function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
             <p className="text-[0.6rem] text-alpha/60 mb-6 font-primary text-center">
                 Shipping & taxes calculated at checkout.
             </p>
-            <button className="w-full bg-alpha text-creme py-4 text-xs uppercase tracking-[0.2em] hover:bg-alpha/90 transition-colors">
+            <Link 
+              href="/checkout"
+              onClick={onClose}
+              className="w-full bg-alpha text-creme py-4 text-xs uppercase tracking-[0.2em] hover:bg-alpha/90 transition-colors block text-center"
+            >
                 Checkout
-            </button>
+            </Link>
         </div>
       </div>
     </>

@@ -63,8 +63,9 @@ export default function Marketing() {
 
           {/* Sidebar Column - Stacked Items */}
           <div className="md:col-span-1 flex flex-col divide-y divide-black/5">
+            {/* Sidebar blogs - hidden on mobile, visible on desktop */}
             {sidebarBlogs.map((blog) => (
-              <Link href="/blogs" key={blog.id} className="group relative flex-1 min-h-[40vh] md:min-h-0 cursor-pointer overflow-hidden bg-white hover:bg-ivory transition-colors duration-500 block">
+              <Link href="/blogs" key={blog.id} className="hidden md:block group relative flex-1 min-h-[40vh] md:min-h-0 cursor-pointer overflow-hidden bg-white hover:bg-ivory transition-colors duration-500">
                 <div className="relative h-2/3 overflow-hidden">
                   <Image
                     src={blog.image}
@@ -117,8 +118,8 @@ export default function Marketing() {
         </div>
       </div>
 
-      {/* Footer Link */}
-      <div className="mt-12 text-center pb-12">
+      {/* Footer Link - hidden on mobile, visible on desktop */}
+      <div className="hidden md:block mt-12 text-center pb-12">
         <Link href="/blogs" className="inline-block text-xs uppercase tracking-widest border-b border-alpha/30 pb-1 hover:border-alpha transition-colors duration-300">
           Read All Stories
         </Link>

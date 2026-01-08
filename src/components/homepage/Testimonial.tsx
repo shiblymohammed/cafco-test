@@ -50,10 +50,10 @@ function QuoteIcon() {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width="48"
-      height="48"
+      width="28"
+      height="28"
       viewBox="0 0 64 64"
-      className="mb-4"
+      className="mb-2"
     >
       <circle cx="32" cy="32" r="30" fill="#f2f2f2" />
       <path
@@ -67,7 +67,7 @@ function QuoteIcon() {
 function StarIcon({ filled }: { filled: boolean }) {
   return (
     <svg
-      className={`w-4 h-4 ${filled ? "text-gold" : "text-border-light"}`}
+      className={`w-3 h-3 ${filled ? "text-gold" : "text-border-light"}`}
       fill={filled ? "currentColor" : "none"}
       stroke="currentColor"
       strokeWidth={filled ? 0 : 1.5}
@@ -86,27 +86,23 @@ function TestimonialCard({
   name,
   review,
   rating,
-  index = 0,
 }: {
   name: string;
   review: string;
   rating: number;
-  index?: number;
 }) {
   return (
-    <div
-      className="bg-ivory rounded-card p-7 shadow-card hover:shadow-card-hover transition-all duration-normal hover:-translate-y-1 h-full"
-    >
+    <div className="bg-ivory rounded-card p-4 shadow-card hover:shadow-card-hover transition-all duration-normal hover:-translate-y-1 h-full">
       <QuoteIcon />
-      <div className="flex gap-1 mb-4">
+      <div className="flex gap-0.5 mb-2">
         {[1, 2, 3, 4, 5].map((star) => (
           <StarIcon key={star} filled={star <= rating} />
         ))}
       </div>
-      <p className="text-body text-text-secondary leading-relaxed mb-5 italic">
+      <p className="text-small text-text-secondary leading-snug mb-3 italic line-clamp-3">
         &ldquo;{review}&rdquo;
       </p>
-      <p className="text-small font-semibold text-text-primary tracking-wide">
+      <p className="text-caption font-semibold text-text-primary tracking-wide">
         {name}
       </p>
     </div>
@@ -124,16 +120,16 @@ function MarqueeCard({
   rating: number;
 }) {
   return (
-    <div className="flex-shrink-0 w-[280px] bg-ivory rounded-card p-5 shadow-card mx-2">
-      <div className="flex gap-1 mb-3">
+    <div className="flex-shrink-0 w-[220px] bg-ivory rounded-card p-3 shadow-card mx-2">
+      <div className="flex gap-0.5 mb-2">
         {[1, 2, 3, 4, 5].map((star) => (
           <StarIcon key={star} filled={star <= rating} />
         ))}
       </div>
-      <p className="text-small text-text-secondary leading-relaxed mb-3 italic line-clamp-3">
+      <p className="text-caption text-text-secondary leading-snug mb-2 italic line-clamp-2">
         &ldquo;{review}&rdquo;
       </p>
-      <p className="text-caption font-semibold text-text-primary tracking-wide">
+      <p className="text-[11px] font-semibold text-text-primary tracking-wide">
         {name}
       </p>
     </div>
@@ -225,14 +221,13 @@ export default function Testimonial() {
         <MobileMarquee />
 
         {/* Desktop/Tablet Grid */}
-        <div className="hidden sm:grid sm:grid-cols-2 lg:grid-cols-3 gap-6 px-container">
-          {testimonials.map((testimonial, index) => (
+        <div className="hidden sm:grid sm:grid-cols-2 lg:grid-cols-3 gap-4 px-container">
+          {testimonials.map((testimonial) => (
             <TestimonialCard
               key={testimonial.id}
               name={testimonial.name}
               review={testimonial.review}
               rating={testimonial.rating}
-              index={index}
             />
           ))}
         </div>

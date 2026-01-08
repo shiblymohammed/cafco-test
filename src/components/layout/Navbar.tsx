@@ -15,6 +15,14 @@ export default function Navbar() {
   const pathname = usePathname();
   const isHomePage = pathname === "/";
   
+  // Pages where search is useful (product browsing/discovery pages)
+  const showSearch = pathname === "/" || 
+                     pathname === "/categories" || 
+                     pathname === "/collections" || 
+                     pathname === "/blogs" ||
+                     pathname.startsWith("/category/") ||
+                     pathname.startsWith("/collections/");
+  
   const [isScrolled, setIsScrolled] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
@@ -68,30 +76,36 @@ export default function Navbar() {
         {/* First Row - Logo centered, Icons on right */}
         <div className="relative z-10 w-full h-14 max-w-[1920px] mx-auto flex items-center px-6">
           
-          {/* Left Side - Search */}
+          {/* Left Side - Search (only on browsing pages) */}
           <div className="flex items-center gap-2 flex-1">
-            <button 
-              onClick={() => setIsSearchOpen(true)}
-              className={`p-2 flex items-center justify-center rounded transition-all duration-200 ${
-                showSolidNavbar ? "text-alpha/70 hover:text-alpha" : "text-creme/80 hover:text-creme"
-              }`}
-              style={{
-                transition: 'color 0.35s cubic-bezier(0.4, 0, 0.2, 1) 0.05s',
-              }}
-              aria-label="Search"
-            >
-              <SearchIcon size={20} />
-            </button>
-            <span
-              onClick={() => setIsSearchOpen(true)}
-              className={`text-sm font-thin cursor-pointer transition-all duration-300 ${
-                showSolidNavbar 
-                  ? "text-alpha/60 hover:text-alpha" 
-                  : "text-creme/70 hover:text-creme"
-              }`}
-            >
-              Search
-            </span>
+            {showSearch ? (
+              <>
+                <button 
+                  onClick={() => setIsSearchOpen(true)}
+                  className={`p-2 flex items-center justify-center rounded transition-all duration-200 ${
+                    showSolidNavbar ? "text-alpha/70 hover:text-alpha" : "text-creme/80 hover:text-creme"
+                  }`}
+                  style={{
+                    transition: 'color 0.35s cubic-bezier(0.4, 0, 0.2, 1) 0.05s',
+                  }}
+                  aria-label="Search"
+                >
+                  <SearchIcon size={20} />
+                </button>
+                <span
+                  onClick={() => setIsSearchOpen(true)}
+                  className={`text-sm font-thin cursor-pointer transition-all duration-300 ${
+                    showSolidNavbar 
+                      ? "text-alpha/60 hover:text-alpha" 
+                      : "text-creme/70 hover:text-creme"
+                  }`}
+                >
+                  Search
+                </span>
+              </>
+            ) : (
+              <div /> 
+            )}
           </div>
 
           {/* Center - Logo */}

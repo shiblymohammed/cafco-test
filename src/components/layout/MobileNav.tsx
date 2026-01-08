@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useLayoutEffect } from "react";
+import { usePathname } from "next/navigation";
 import Link from "next/link";
 import MenuAnimation from "./menu/menuanimation";
 import CartIcon from "./menu/carticon";
@@ -11,6 +12,9 @@ import CartDrawer from "./modals/CartDrawer";
 import WishlistDrawer from "./modals/WishlistDrawer";
 
 export default function MobileNav() {
+  const pathname = usePathname();
+  const isHomePage = pathname === "/";
+  
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -26,6 +30,9 @@ export default function MobileNav() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // On non-homepage, always show solid navbar style (same as desktop)
+  const showSolidNavbar = !isHomePage || isScrolled;
+
   return (
     <>
       {/* Top Navbar */}
@@ -35,7 +42,7 @@ export default function MobileNav() {
           {/* Hamburger Button - Square */}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className={`h-12 w-14 flex items-center justify-center relative overflow-hidden ${isScrolled ? "text-alpha border-r border-alpha/50" : "text-creme"
+            className={`h-12 w-14 flex items-center justify-center relative overflow-hidden ${showSolidNavbar ? "text-alpha border-r border-alpha/50" : "text-creme"
               }`}
             style={{
               transition: 'color 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
@@ -45,7 +52,7 @@ export default function MobileNav() {
             <div 
               className="absolute inset-0 bg-creme will-change-transform"
               style={{
-                transform: isScrolled ? 'translateX(0) scale(1)' : 'translateX(-105%) scale(0.95)',
+                transform: showSolidNavbar ? 'translateX(0) scale(1)' : 'translateX(-105%) scale(0.95)',
                 transition: 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
               }}
             />
@@ -57,7 +64,7 @@ export default function MobileNav() {
           {/* Search Button - Square */}
           <button
             onClick={() => setIsSearchOpen(true)}
-            className={`h-12 w-14 flex items-center justify-center relative overflow-hidden ${isScrolled ? "text-alpha" : "text-creme"
+            className={`h-12 w-14 flex items-center justify-center relative overflow-hidden ${showSolidNavbar ? "text-alpha" : "text-creme"
               }`}
             style={{
               transition: 'color 0.35s cubic-bezier(0.4, 0, 0.2, 1) 0.03s',
@@ -67,7 +74,7 @@ export default function MobileNav() {
             <div 
               className="absolute inset-0 bg-creme will-change-transform"
               style={{
-                transform: isScrolled ? 'translateY(0) scale(1)' : 'translateY(105%) scale(0.95)',
+                transform: showSolidNavbar ? 'translateY(0) scale(1)' : 'translateY(105%) scale(0.95)',
                 transition: 'transform 0.35s cubic-bezier(0.4, 0, 0.2, 1) 0.03s',
               }}
             />
@@ -78,7 +85,7 @@ export default function MobileNav() {
 
           {/* Logo Button - Rectangle (flex-1 to fill remaining space) */}
           <button
-            className={`h-12 flex-1 flex items-center justify-center text-3xl font-['brand-primary'] relative overflow-hidden ${isScrolled ? "text-alpha border-l border-r border-alpha/50" : "text-creme"
+            className={`h-12 flex-1 flex items-center justify-center text-3xl font-['brand-primary'] relative overflow-hidden ${showSolidNavbar ? "text-alpha border-l border-r border-alpha/50" : "text-creme"
               }`}
             style={{
               transition: 'color 0.4s cubic-bezier(0.4, 0, 0.2, 1) 0.06s',
@@ -88,7 +95,7 @@ export default function MobileNav() {
             <div 
               className="absolute inset-0 bg-creme will-change-transform"
               style={{
-                transform: isScrolled ? 'translateY(0) scale(1)' : 'translateY(-105%) scale(0.95)',
+                transform: showSolidNavbar ? 'translateY(0) scale(1)' : 'translateY(-105%) scale(0.95)',
                 transition: 'transform 0.4s cubic-bezier(0.4, 0, 0.2, 1) 0.06s',
               }}
             />
@@ -100,7 +107,7 @@ export default function MobileNav() {
           {/* Wishlist Button - Square */}
           <button
             onClick={() => setIsWishlistOpen(true)}
-            className={`h-12 w-14 flex items-center justify-center relative overflow-hidden ${isScrolled ? "text-alpha" : "text-creme"
+            className={`h-12 w-14 flex items-center justify-center relative overflow-hidden ${showSolidNavbar ? "text-alpha" : "text-creme"
               }`}
             style={{
               transition: 'color 0.45s cubic-bezier(0.4, 0, 0.2, 1) 0.09s',
@@ -110,7 +117,7 @@ export default function MobileNav() {
             <div 
               className="absolute inset-0 bg-creme will-change-transform"
               style={{
-                transform: isScrolled ? 'translateY(0) scale(1)' : 'translateY(105%) scale(0.95)',
+                transform: showSolidNavbar ? 'translateY(0) scale(1)' : 'translateY(105%) scale(0.95)',
                 transition: 'transform 0.45s cubic-bezier(0.4, 0, 0.2, 1) 0.09s',
               }}
             />
@@ -122,7 +129,7 @@ export default function MobileNav() {
           {/* Cart Button - Square */}
           <button
             onClick={() => setIsCartOpen(true)}
-            className={`h-12 w-14 flex items-center justify-center relative overflow-hidden ${isScrolled ? "text-alpha border-l border-alpha/50" : "text-creme"
+            className={`h-12 w-14 flex items-center justify-center relative overflow-hidden ${showSolidNavbar ? "text-alpha border-l border-alpha/50" : "text-creme"
               }`}
             style={{
               transition: 'color 0.5s cubic-bezier(0.4, 0, 0.2, 1) 0.12s',
@@ -132,7 +139,7 @@ export default function MobileNav() {
             <div 
               className="absolute inset-0 bg-creme will-change-transform"
               style={{
-                transform: isScrolled ? 'translateX(0) scale(1)' : 'translateX(105%) scale(0.95)',
+                transform: showSolidNavbar ? 'translateX(0) scale(1)' : 'translateX(105%) scale(0.95)',
                 transition: 'transform 0.5s cubic-bezier(0.4, 0, 0.2, 1) 0.12s',
               }}
             />
@@ -146,7 +153,7 @@ export default function MobileNav() {
 
       {/* Background Overlay */}
       <div
-        className={`md:hidden fixed inset-0 bg-black/50 z-40 transition-opacity duration-200 ${
+        className={`md:hidden fixed inset-0 bg-alpha/60 backdrop-blur-sm z-40 transition-all duration-300 ${
           isOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
         }`}
         onClick={() => setIsOpen(false)}
@@ -154,18 +161,82 @@ export default function MobileNav() {
 
       {/* Sidebar Menu */}
       <div
-        className={`fixed left-0 top-12 bottom-0 w-64 bg-creme p-6 z-50 transition-transform duration-200 ease-out will-change-transform
+        className={`md:hidden fixed left-0 top-12 bottom-0 w-72 bg-creme z-50 transition-transform duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] will-change-transform shadow-2xl
           ${isOpen ? "translate-x-0" : "-translate-x-full"}
         `}
         onClick={(e) => e.stopPropagation()}
       >
-        <nav className="flex flex-col gap-4">
-          <Link href="/" className="text-lg">Home</Link>
-          <Link href="/about" className="text-lg">About</Link>
-          <Link href="/categories" className="text-lg">Categories</Link>
-          <Link href="/collections" className="text-lg">Collections</Link>
-          <Link href="/contact" className="text-lg">Contact</Link>
-        </nav>
+        {/* Menu Content */}
+        <div className="flex flex-col h-full">
+          {/* Navigation Links */}
+          <nav className="flex-1 px-6 py-8">
+            <div className="flex flex-col">
+              {[
+                { href: "/", label: "Home" },
+                { href: "/about", label: "About" },
+                { href: "/categories", label: "Categories" },
+                { href: "/collections", label: "Collections" },
+                { href: "/blogs", label: "Blogs" },
+                { href: "/contact", label: "Contact" },
+              ].map((link, index) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  onClick={() => setIsOpen(false)}
+                  className="group relative py-4 border-b border-alpha/10 last:border-b-0"
+                  style={{
+                    opacity: isOpen ? 1 : 0,
+                    transform: isOpen ? 'translateX(0)' : 'translateX(-20px)',
+                    transition: `opacity 0.4s ease ${0.1 + index * 0.05}s, transform 0.4s ease ${0.1 + index * 0.05}s`,
+                  }}
+                >
+                  <span className="flex items-center justify-between">
+                    <span className="text-xl font-secondary text-alpha group-hover:text-tango transition-colors duration-200">
+                      {link.label}
+                    </span>
+                    <svg 
+                      className="w-4 h-4 text-alpha/30 group-hover:text-tango group-hover:translate-x-1 transition-all duration-200" 
+                      fill="none" 
+                      stroke="currentColor" 
+                      viewBox="0 0 24 24"
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 5l7 7-7 7" />
+                    </svg>
+                  </span>
+                </Link>
+              ))}
+            </div>
+          </nav>
+
+          {/* Bottom Section */}
+          <div 
+            className="px-6 py-6 border-t border-alpha/10"
+            style={{
+              opacity: isOpen ? 1 : 0,
+              transform: isOpen ? 'translateY(0)' : 'translateY(10px)',
+              transition: 'opacity 0.4s ease 0.4s, transform 0.4s ease 0.4s',
+            }}
+          >
+            <p className="text-xs font-primary text-alpha/40 uppercase tracking-widest mb-3">Follow Us</p>
+            <div className="flex items-center gap-4">
+              <a href="#" className="text-alpha/50 hover:text-tango transition-colors">
+                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/>
+                </svg>
+              </a>
+              <a href="#" className="text-alpha/50 hover:text-tango transition-colors">
+                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                </svg>
+              </a>
+              <a href="#" className="text-alpha/50 hover:text-tango transition-colors">
+                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"/>
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
       </div>
 
        {/* Modals */}
