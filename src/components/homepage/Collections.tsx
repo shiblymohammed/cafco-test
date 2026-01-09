@@ -87,11 +87,20 @@ export default function Collections() {
         </h2>
       </div>
 
-      {/* Grid Layout */}
+      {/* Grid Layout - V-shape alignment */}
       <div className="max-w-[1440px] mx-auto px-4">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 md:gap-6">
-          {collections.map((collection) => (
-            <CollectionCard key={collection.id} collection={collection} />
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 md:gap-6 items-start">
+          {collections.map((collection, index) => (
+            <div
+              key={collection.id}
+              className={`${
+                index === 1
+                  ? "lg:mt-0" // Center card stays at top
+                  : "lg:mt-12" // Left and right cards drop down for V-shape
+              }`}
+            >
+              <CollectionCard collection={collection} />
+            </div>
           ))}
         </div>
 
