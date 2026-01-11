@@ -135,16 +135,14 @@ export default function Categories() {
           ))}
         </div>
 
-        {/* Mobile View All Button */}
-        <div className="flex justify-center mt-5">
+        {/* Mobile View All Link */}
+        <div className="flex justify-center mt-8">
           <a
             href="/categories"
-            className="flex items-center gap-2 px-5 py-2.5 text-small text-tango border border-tango rounded-button active:bg-tango active:text-text-inverse transition-all duration-fast tracking-wide"
+            className="inline-flex items-center gap-3 text-xs uppercase tracking-widest font-semibold border-b border-alpha pb-1 hover:text-tango hover:border-tango transition-colors duration-300"
           >
-            View All
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 5l7 7-7 7" />
-            </svg>
+            View All Categories
+            <span>→</span>
           </a>
         </div>
       </div>
@@ -159,6 +157,17 @@ export default function Categories() {
           {categories.slice(1).map((category) => (
             <DesktopCategoryCard key={category.id} category={category} />
           ))}
+        </div>
+
+        {/* Desktop View All Link */}
+        <div className="flex justify-center mt-12">
+          <a
+            href="/categories"
+            className="inline-flex items-center gap-3 text-xs uppercase tracking-widest font-semibold border-b border-alpha pb-1 hover:text-tango hover:border-tango transition-colors duration-300"
+          >
+            View All Categories
+            <span>→</span>
+          </a>
         </div>
       </div>
     </section>
