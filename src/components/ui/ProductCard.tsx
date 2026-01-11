@@ -73,21 +73,22 @@ interface ProductCardQuickAddProps {
 }
 
 export function ProductCardQuickAdd({
-    onClick,
-    className = "",
-  }: ProductCardQuickAddProps) {
-    return (
-      <button
-        onClick={(e) => {
-          e.stopPropagation();
-          onClick?.();
-        }}
-        className={`absolute bottom-0 left-0 right-0 h-10 bg-alpha text-creme text-xs uppercase tracking-widest font-semibold flex items-center justify-center translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out z-20 ${className}`}
-      >
-        Quick Add
-      </button>
-    );
-  }
+  onClick,
+  className = "",
+}: ProductCardQuickAddProps) {
+  return (
+    <button
+      suppressHydrationWarning
+      onClick={(e) => {
+        e.stopPropagation();
+        onClick?.();
+      }}
+      className={`absolute bottom-0 left-0 right-0 h-10 bg-alpha text-creme text-xs uppercase tracking-widest font-semibold flex items-center justify-center translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out z-20 ${className}`}
+    >
+      Quick Add
+    </button>
+  );
+}
 
 // Product Title - Elegant & Understated
 interface ProductCardTitleProps {
@@ -208,6 +209,7 @@ export function ProductCardWishlist({
 }: ProductCardWishlistProps) {
   return (
     <button
+      suppressHydrationWarning
       onClick={(e) => {
         e.stopPropagation();
         onClick?.();

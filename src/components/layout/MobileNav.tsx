@@ -1,25 +1,48 @@
 "use client";
 
-import { useState, useEffect, useLayoutEffect } from "react";
-import { usePathname } from "next/navigation";
+import { useState, useEffect, useRef } from "react";
+import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
 import MenuAnimation from "./menu/menuanimation";
 import CartIcon from "./menu/carticon";
 import SearchIcon from "./menu/searchicon";
 import WishlistIcon from "./menu/wishlisticon";
-import SearchModal from "./modals/SearchModal";
 import CartDrawer from "./modals/CartDrawer";
 import WishlistDrawer from "./modals/WishlistDrawer";
 
 export default function MobileNav() {
   const pathname = usePathname();
+  const router = useRouter();
   const isHomePage = pathname === "/";
   
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [isSearchExpanded, setIsSearchExpanded] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isWishlistOpen, setIsWishlistOpen] = useState(false);
+  const searchInputRef = useRef<HTMLInputElement>(null);
+
+  const handleSearchSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      router.push(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
+      setIsSearchExpanded(false);
+      setSearchQuery("");
+    }
+  };
+
+  const handleSearchToggle = () => {
+    setIsSearchExpanded(!isSearchExpanded);
+    if (!isSearchExpanded) {
+      setTimeout(() => searchInputRef.current?.focus(), 100);
+    }
+  };
+
+  const handleSearchClose = () => {
+    setIsSearchExpanded(false);
+    setSearchQuery("");
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -63,7 +86,7 @@ export default function MobileNav() {
 
           {/* Search Button - Square */}
           <button
-            onClick={() => setIsSearchOpen(true)}
+            onClick={handleSearchToggle}
             className={`h-12 w-14 flex items-center justify-center relative overflow-hidden ${showSolidNavbar ? "text-alpha" : "text-creme"
               }`}
             style={{
@@ -240,9 +263,77 @@ export default function MobileNav() {
       </div>
 
        {/* Modals */}
-       <SearchModal isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />
        <CartDrawer isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
        <WishlistDrawer isOpen={isWishlistOpen} onClose={() => setIsWishlistOpen(false)} />
+
+       {/* Mobile Search Bar - Slides down when expanded */}
+       <div 
+         className={`md:hidden fixed left-0 right-0 z-40 transition-all duration-300 ease-out ${
+           isSearchExpanded ? "top-12 opacity-100" : "-top-16 opacity-0 pointer-events-none"
+         }`}
+       >
+         <div className="relative overflow-hidden">
+           {/* Background that slides in like navbar */}
+           <div 
+             className="absolute inset-0 bg-creme border-b border-alpha/5 will-change-transform"
+             style={{
+               transform: showSolidNavbar ? 'translateY(0)' : 'translateY(-100%)',
+               transition: 'transform 0.35s cubic-bezier(0.4, 0, 0.2, 1)',
+             }}
+           />
+           <form onSubmit={handleSearchSubmit} className="relative z-10 px-4 py-3">
+             <div className={`flex items-center h-11 px-4 rounded-full border transition-all duration-300 ${
+               showSolidNavbar 
+                 ? "bg-alpha/[0.03] border-alpha/10 focus-within:border-alpha/20" 
+                 : "bg-creme/10 border-creme/20 focus-within:border-creme/35"
+             }`}>
+               <SearchIcon size={18} className={`flex-shrink-0 transition-colors duration-300 ${
+                 showSolidNavbar ? "text-alpha/35" : "text-creme/50"
+               }`} />
+               <input
+                 ref={searchInputRef}
+                 type="text"
+                 value={searchQuery}
+                 onChange={(e) => setSearchQuery(e.target.value)}
+                 placeholder="Search products..."
+                 className={`flex-1 ml-3 bg-transparent text-sm font-primary tracking-wide outline-none transition-colors duration-300 ${
+                   showSolidNavbar 
+                     ? "text-alpha placeholder:text-alpha/35" 
+                     : "text-creme placeholder:text-creme/50"
+                 }`}
+               />
+               {searchQuery && (
+                 <button
+                   type="button"
+                   onClick={() => setSearchQuery("")}
+                   className={`flex-shrink-0 p-1 transition-colors ${
+                     showSolidNavbar 
+                       ? "text-alpha/30 hover:text-alpha/60" 
+                       : "text-creme/40 hover:text-creme/70"
+                   }`}
+                   aria-label="Clear search"
+                 >
+                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                   </svg>
+                 </button>
+               )}
+               <button
+                 type="button"
+                 onClick={handleSearchClose}
+                 className={`flex-shrink-0 ml-2 pl-2 border-l text-[11px] uppercase tracking-widest font-primary transition-colors duration-300 ${
+                   showSolidNavbar 
+                     ? "border-alpha/10 text-alpha/40 hover:text-alpha/60" 
+                     : "border-creme/20 text-creme/50 hover:text-creme/70"
+                 }`}
+                 aria-label="Close search"
+               >
+                 Cancel
+               </button>
+             </div>
+           </form>
+         </div>
+       </div>
     </>
   );
 }

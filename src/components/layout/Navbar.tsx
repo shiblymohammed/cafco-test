@@ -1,18 +1,18 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { usePathname } from "next/navigation";
+import { useState, useEffect, useRef } from "react";
+import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
 import CartIcon from "./menu/carticon";
 import SearchIcon from "./menu/searchicon";
 import WishlistIcon from "./menu/wishlisticon";
-import SearchModal from "./modals/SearchModal";
 import CartDrawer from "./modals/CartDrawer";
 import WishlistDrawer from "./modals/WishlistDrawer";
 import AuthModal from "../auth/AuthModal";
 
 export default function Navbar() {
   const pathname = usePathname();
+  const router = useRouter();
   const isHomePage = pathname === "/";
   
   // Pages where search is useful (product browsing/discovery pages)
@@ -24,11 +24,35 @@ export default function Navbar() {
                      pathname.startsWith("/collections/");
   
   const [isScrolled, setIsScrolled] = useState(false);
-  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [isSearchExpanded, setIsSearchExpanded] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isWishlistOpen, setIsWishlistOpen] = useState(false);
   const [isAuthOpen, setIsAuthOpen] = useState(false);
   const [authMode, setAuthMode] = useState<"login" | "signup">("login");
+  const searchInputRef = useRef<HTMLInputElement>(null);
+
+  const handleSearchSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      router.push(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
+      setIsSearchExpanded(false);
+      setSearchQuery("");
+    }
+  };
+
+  const handleSearchToggle = () => {
+    setIsSearchExpanded(!isSearchExpanded);
+    if (!isSearchExpanded) {
+      setTimeout(() => searchInputRef.current?.focus(), 100);
+    }
+  };
+
+  const handleSearchBlur = () => {
+    if (!searchQuery.trim()) {
+      setIsSearchExpanded(false);
+    }
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -77,32 +101,65 @@ export default function Navbar() {
         <div className="relative z-10 w-full h-14 max-w-[1920px] mx-auto flex items-center px-6">
           
           {/* Left Side - Search (only on browsing pages) */}
-          <div className="flex items-center gap-2 flex-1">
+          <div className="flex items-center flex-1">
             {showSearch ? (
-              <>
-                <button 
-                  onClick={() => setIsSearchOpen(true)}
-                  className={`p-2 flex items-center justify-center rounded transition-all duration-200 ${
-                    showSolidNavbar ? "text-alpha/70 hover:text-alpha" : "text-creme/80 hover:text-creme"
-                  }`}
-                  style={{
-                    transition: 'color 0.35s cubic-bezier(0.4, 0, 0.2, 1) 0.05s',
-                  }}
-                  aria-label="Search"
-                >
-                  <SearchIcon size={20} />
-                </button>
-                <span
-                  onClick={() => setIsSearchOpen(true)}
-                  className={`text-sm font-thin cursor-pointer transition-all duration-300 ${
-                    showSolidNavbar 
-                      ? "text-alpha/60 hover:text-alpha" 
-                      : "text-creme/70 hover:text-creme"
-                  }`}
-                >
-                  Search
-                </span>
-              </>
+              <form onSubmit={handleSearchSubmit} className="flex items-center">
+                <div className={`flex items-center transition-all duration-300 ease-out ${
+                  isSearchExpanded 
+                    ? "w-56 lg:w-72" 
+                    : "w-auto"
+                }`}>
+                  {isSearchExpanded ? (
+                    <div className={`flex items-center w-full h-9 px-3 rounded-full border transition-all duration-200 ${
+                      showSolidNavbar 
+                        ? "bg-alpha/[0.03] border-alpha/10 focus-within:border-alpha/25" 
+                        : "bg-creme/[0.08] border-creme/15 focus-within:border-creme/30"
+                    }`}>
+                      <SearchIcon size={16} className={`flex-shrink-0 ${showSolidNavbar ? "text-alpha/40" : "text-creme/50"}`} />
+                      <input
+                        ref={searchInputRef}
+                        type="text"
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        onBlur={handleSearchBlur}
+                        placeholder="Search..."
+                        className={`w-full ml-2.5 bg-transparent text-[13px] font-primary tracking-wide outline-none ${
+                          showSolidNavbar 
+                            ? "text-alpha placeholder:text-alpha/35" 
+                            : "text-creme placeholder:text-creme/40"
+                        }`}
+                      />
+                      {searchQuery && (
+                        <button
+                          type="button"
+                          onClick={() => setSearchQuery("")}
+                          className={`flex-shrink-0 ml-1 p-0.5 rounded-full transition-colors ${
+                            showSolidNavbar ? "text-alpha/30 hover:text-alpha/60" : "text-creme/40 hover:text-creme/70"
+                          }`}
+                        >
+                          <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                          </svg>
+                        </button>
+                      )}
+                    </div>
+                  ) : (
+                    <button 
+                      type="button"
+                      onClick={handleSearchToggle}
+                      className={`flex items-center gap-2 h-9 px-3 rounded-full border transition-all duration-200 ${
+                        showSolidNavbar 
+                          ? "border-alpha/10 text-alpha/50 hover:border-alpha/20 hover:text-alpha/70" 
+                          : "border-creme/15 text-creme/60 hover:border-creme/25 hover:text-creme/80"
+                      }`}
+                      aria-label="Search"
+                    >
+                      <SearchIcon size={16} />
+                      <span className="text-[13px] font-primary tracking-wide">Search</span>
+                    </button>
+                  )}
+                </div>
+              </form>
             ) : (
               <div /> 
             )}
@@ -208,7 +265,6 @@ export default function Navbar() {
       </nav>
 
       {/* Modals */}
-      <SearchModal isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />
       <CartDrawer isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
       <WishlistDrawer isOpen={isWishlistOpen} onClose={() => setIsWishlistOpen(false)} />
       <AuthModal isOpen={isAuthOpen} onClose={() => setIsAuthOpen(false)} initialMode={authMode} />

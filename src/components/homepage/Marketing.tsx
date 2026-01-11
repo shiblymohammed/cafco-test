@@ -103,11 +103,12 @@ export default function Marketing() {
               </p>
               <div className="w-full max-w-xs relative">
                 <input
+                  suppressHydrationWarning
                   type="email"
                   placeholder="Email Address"
                   className="w-full bg-transparent border-b border-creme/30 py-2 text-xs uppercase tracking-wider placeholder:text-creme/30 focus:outline-none focus:border-creme transition-colors duration-300 text-center"
                 />
-                <button className="absolute right-0 top-0 bottom-0 text-[0.6rem] uppercase tracking-widest hover:text-creme/70 transition-colors">
+                <button suppressHydrationWarning className="absolute right-0 top-0 bottom-0 text-[0.6rem] uppercase tracking-widest hover:text-creme/70 transition-colors">
                   Submit
                 </button>
               </div>
