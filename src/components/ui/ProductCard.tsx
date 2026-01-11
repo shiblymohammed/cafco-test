@@ -101,7 +101,7 @@ export function ProductCardTitle({
 }: ProductCardTitleProps) {
   return (
     <h3
-      className={`text-sm md:text-[1rem] font-primary text-alpha font-semibold leading-tight tracking-wide group-hover:underline decoration-1 underline-offset-4 ${className}`}
+      className={`pt-3 text-sm md:text-[1rem] font-primary text-alpha font-normal leading-tight tracking-wide group-hover:underline decoration-1 underline-offset-4 ${className}`}
     >
       {children}
     </h3>

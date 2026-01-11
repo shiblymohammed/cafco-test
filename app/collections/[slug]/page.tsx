@@ -7,6 +7,7 @@ import { useParams } from "next/navigation";
 import { collections } from "@/src/data/collections";
 import { products, Product } from "@/src/data/products";
 import { FilterBar } from "@/src/components/ui/FilterBar";
+import { Pagination } from "@/src/components/ui/Pagination";
 import {
   ProductCard,
   ProductCardImage,
@@ -37,6 +38,8 @@ export default function CollectionProductsPage() {
   const [priceRange, setPriceRange] = useState("all");
   const [selectedColors, setSelectedColors] = useState<string[]>([]);
   const [selectedMaterials, setSelectedMaterials] = useState<string[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const productsPerPage = 12;
 
   // Extract unique colors and materials from products
   const availableColors = useMemo(() => {
@@ -102,19 +105,32 @@ export default function CollectionProductsPage() {
     return filtered;
   }, [collectionProducts, sortBy, priceRange, selectedColors, selectedMaterials]);
 
+  // Pagination
+  const totalPages = Math.ceil(filteredProducts.length / productsPerPage);
+  const paginatedProducts = useMemo(() => {
+    const start = (currentPage - 1) * productsPerPage;
+    return filteredProducts.slice(start, start + productsPerPage);
+  }, [filteredProducts, currentPage]);
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+    window.scrollTo({ top: 500, behavior: "smooth" });
+  };
+
   const handleClearFilters = () => {
     setSortBy("featured");
     setPriceRange("all");
     setSelectedColors([]);
     setSelectedMaterials([]);
+    setCurrentPage(1);
   };
 
   if (!collection) {
     return (
       <main className="pt-20 bg-creme min-h-screen">
-        <div className="max-w-[1440px] mx-auto px-4 md:px-12 py-24 text-center">
-          <h1 className="text-3xl font-secondary text-alpha mb-4">Collection Not Found</h1>
-          <p className="text-alpha/60 mb-8">The collection you&apos;re looking for doesn&apos;t exist.</p>
+        <div className="max-w-[1440px] mx-auto px-4 py-20 text-center">
+          <h1 className="text-2xl font-secondary text-alpha mb-3">Collection Not Found</h1>
+          <p className="text-alpha/60 mb-6">The collection you&apos;re looking for doesn&apos;t exist.</p>
           <Link href="/collections" className="inline-flex items-center gap-2 text-xs uppercase tracking-widest font-primary border-b border-alpha pb-1 hover:text-tango hover:border-tango transition-colors">
             Browse All Collections
           </Link>
@@ -126,7 +142,7 @@ export default function CollectionProductsPage() {
   return (
     <main className="pt-20 bg-creme min-h-screen pb-20">
       {/* Hero Section */}
-      <section className="relative h-[50vh] md:h-[60vh] overflow-hidden">
+      <section className="relative h-[40vh] md:h-[50vh] overflow-hidden">
         <Image
           src={collection.image}
           alt={collection.title}
@@ -136,37 +152,35 @@ export default function CollectionProductsPage() {
         />
         <div className="absolute inset-0 bg-gradient-to-t from-alpha/80 via-alpha/40 to-alpha/20" />
         <div className="absolute inset-0 flex items-end">
-          <div className="max-w-[1440px] mx-auto px-4 md:px-12 pb-12 md:pb-16 w-full">
-            <nav className="flex items-center gap-2 text-xs text-creme/70 mb-4">
+          <div className="max-w-[1440px] mx-auto px-4 pb-10 md:pb-14 w-full">
+            <nav className="flex items-center gap-2 text-xs text-creme/70 mb-3">
               <Link href="/" className="hover:text-creme transition-colors">Home</Link>
               <span>/</span>
               <Link href="/collections" className="hover:text-creme transition-colors">Collections</Link>
               <span>/</span>
               <span className="text-creme">{collection.title}</span>
             </nav>
-            <span className="text-xs font-primary uppercase tracking-[0.2em] text-creme/70 mb-2 block">
+            <span className="text-xs font-primary uppercase tracking-[0.2em] text-creme/70 mb-1 block">
               {collection.subtitle}
             </span>
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-secondary text-creme leading-[0.95] tracking-tight mb-4">
+            <h1 className="text-3xl md:text-5xl lg:text-6xl font-secondary text-creme leading-[0.95] tracking-tight mb-3">
               {collection.title}
             </h1>
-            <p className="text-sm md:text-base text-creme/80 font-primary max-w-xl leading-relaxed">
+            <p className="text-sm text-creme/80 font-primary max-w-lg leading-relaxed">
               {collection.description}
             </p>
           </div>
         </div>
       </section>
 
-      {/* Collection Story (Optional) */}
-      <section className="py-12 md:py-16 border-b border-alpha/10">
-        <div className="max-w-[1440px] mx-auto px-4 md:px-12">
-          <div className="max-w-3xl mx-auto text-center">
-            <span className="inline-flex items-center gap-3 text-xs font-primary uppercase tracking-[0.25em] text-alpha/60 mb-4">
-              <span className="w-8 h-[1px] bg-alpha/30"></span>
+      {/* Collection Story */}
+      <section className="py-10 md:py-14 border-b border-alpha/10">
+        <div className="max-w-[1440px] mx-auto px-4">
+          <div className="max-w-2xl mx-auto text-center">
+            <p className="text-xs font-primary uppercase tracking-[0.2em] text-alpha/60 mb-2">
               The Collection
-              <span className="w-8 h-[1px] bg-alpha/30"></span>
-            </span>
-            <p className="text-lg md:text-xl text-alpha/80 font-primary leading-relaxed">
+            </p>
+            <p className="text-base md:text-lg text-alpha/80 font-primary leading-relaxed">
               Each piece in this collection has been thoughtfully selected to embody the essence of {collection.title.toLowerCase()}. 
               Discover furniture and decor that transforms your space into a sanctuary of style and comfort.
             </p>
@@ -175,8 +189,8 @@ export default function CollectionProductsPage() {
       </section>
 
       {/* Results Count */}
-      <section className="py-6 md:py-8 border-b border-alpha/10">
-        <div className="max-w-[1440px] mx-auto px-4 md:px-12">
+      <section className="py-5 md:py-6 border-b border-alpha/10">
+        <div className="max-w-[1440px] mx-auto px-4">
           <p className="text-sm text-alpha/60 font-primary">
             <span className="text-alpha font-medium">{filteredProducts.length}</span> pieces in this collection
           </p>
@@ -184,16 +198,27 @@ export default function CollectionProductsPage() {
       </section>
 
       {/* Products Grid */}
-      <section className="py-8 md:py-12">
-        <div className="max-w-[1440px] mx-auto px-4 md:px-12">
-          {filteredProducts.length > 0 ? (
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-6">
-              {filteredProducts.map((product) => (
-                <ProductItem key={product.id} product={product} />
-              ))}
-            </div>
+      <section className="py-6 md:py-10">
+        <div className="max-w-[1440px] mx-auto px-4">
+          {paginatedProducts.length > 0 ? (
+            <>
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-5">
+                {paginatedProducts.map((product) => (
+                  <ProductItem key={product.id} product={product} />
+                ))}
+              </div>
+              {totalPages > 1 && (
+                <div className="mt-10 md:mt-14">
+                  <Pagination
+                    currentPage={currentPage}
+                    totalPages={totalPages}
+                    onPageChange={handlePageChange}
+                  />
+                </div>
+              )}
+            </>
           ) : (
-            <div className="text-center py-16">
+            <div className="text-center py-14">
               <p className="text-alpha/60 font-primary mb-4">No products match your filters.</p>
               <button
                 onClick={handleClearFilters}
@@ -207,19 +232,17 @@ export default function CollectionProductsPage() {
       </section>
 
       {/* Related Collections */}
-      <section className="py-12 md:py-16 bg-ivory border-t border-alpha/10">
-        <div className="max-w-[1440px] mx-auto px-4 md:px-12">
-          <div className="text-center mb-8 md:mb-12">
-            <span className="inline-flex items-center gap-3 text-xs font-primary uppercase tracking-[0.25em] text-alpha/60 mb-4">
-              <span className="w-8 h-[1px] bg-alpha/30"></span>
+      <section className="py-10 md:py-14 bg-ivory border-t border-alpha/10">
+        <div className="max-w-[1440px] mx-auto px-4">
+          <div className="text-center mb-8 md:mb-10">
+            <p className="text-xs font-primary uppercase tracking-[0.2em] text-alpha/60 mb-1.5">
               Explore More
-              <span className="w-8 h-[1px] bg-alpha/30"></span>
-            </span>
-            <h2 className="text-2xl md:text-3xl font-secondary text-alpha">
-              Other <span className="italic font-light">Collections</span>
+            </p>
+            <h2 className="text-2xl md:text-3xl font-secondary text-alpha font-medium tracking-tight">
+              Other Collections
             </h2>
           </div>
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-5">
             {collections
               .filter(c => c.title !== collection.title)
               .slice(0, 3)
@@ -236,7 +259,7 @@ export default function CollectionProductsPage() {
                     className="object-cover transition-transform duration-700 group-hover:scale-105"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-alpha/70 via-alpha/20 to-transparent" />
-                  <div className="absolute inset-0 flex items-end p-4 md:p-6">
+                  <div className="absolute inset-0 flex items-end p-4 md:p-5">
                     <div>
                       <p className="text-[10px] uppercase tracking-widest text-creme/70 mb-1">{c.subtitle}</p>
                       <h3 className="text-lg md:text-xl font-secondary text-creme group-hover:text-creme/90 transition-colors">

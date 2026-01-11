@@ -7,6 +7,7 @@ import { useParams } from "next/navigation";
 import { categories } from "@/src/data/categories";
 import { products, Product } from "@/src/data/products";
 import { FilterBar } from "@/src/components/ui/FilterBar";
+import { Pagination } from "@/src/components/ui/Pagination";
 import {
   ProductCard,
   ProductCardImage,
@@ -37,6 +38,8 @@ export default function CategoryProductsPage() {
   const [priceRange, setPriceRange] = useState("all");
   const [selectedColors, setSelectedColors] = useState<string[]>([]);
   const [selectedMaterials, setSelectedMaterials] = useState<string[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const productsPerPage = 12;
 
   // Extract unique colors and materials from products
   const availableColors = useMemo(() => {
@@ -102,19 +105,32 @@ export default function CategoryProductsPage() {
     return filtered;
   }, [categoryProducts, sortBy, priceRange, selectedColors, selectedMaterials]);
 
+  // Pagination
+  const totalPages = Math.ceil(filteredProducts.length / productsPerPage);
+  const paginatedProducts = useMemo(() => {
+    const start = (currentPage - 1) * productsPerPage;
+    return filteredProducts.slice(start, start + productsPerPage);
+  }, [filteredProducts, currentPage]);
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+    window.scrollTo({ top: 400, behavior: "smooth" });
+  };
+
   const handleClearFilters = () => {
     setSortBy("featured");
     setPriceRange("all");
     setSelectedColors([]);
     setSelectedMaterials([]);
+    setCurrentPage(1);
   };
 
   if (!category) {
     return (
       <main className="pt-20 bg-creme min-h-screen">
-        <div className="max-w-[1440px] mx-auto px-4 md:px-12 py-24 text-center">
-          <h1 className="text-3xl font-secondary text-alpha mb-4">Category Not Found</h1>
-          <p className="text-alpha/60 mb-8">The category you&apos;re looking for doesn&apos;t exist.</p>
+        <div className="max-w-[1440px] mx-auto px-4 py-20 text-center">
+          <h1 className="text-2xl font-secondary text-alpha mb-3">Category Not Found</h1>
+          <p className="text-alpha/60 mb-6">The category you&apos;re looking for doesn&apos;t exist.</p>
           <Link href="/categories" className="inline-flex items-center gap-2 text-xs uppercase tracking-widest font-primary border-b border-alpha pb-1 hover:text-tango hover:border-tango transition-colors">
             Browse All Categories
           </Link>
@@ -126,7 +142,7 @@ export default function CategoryProductsPage() {
   return (
     <main className="pt-20 bg-creme min-h-screen pb-20">
       {/* Hero Section */}
-      <section className="relative h-[40vh] md:h-[50vh] overflow-hidden">
+      <section className="relative h-[35vh] md:h-[45vh] overflow-hidden">
         <Image
           src={category.image}
           alt={category.name}
@@ -136,18 +152,18 @@ export default function CategoryProductsPage() {
         />
         <div className="absolute inset-0 bg-gradient-to-t from-alpha/70 via-alpha/30 to-transparent" />
         <div className="absolute inset-0 flex items-end">
-          <div className="max-w-[1440px] mx-auto px-4 md:px-12 pb-12 md:pb-16 w-full">
-            <nav className="flex items-center gap-2 text-xs text-creme/70 mb-4">
+          <div className="max-w-[1440px] mx-auto px-4 pb-10 md:pb-14 w-full">
+            <nav className="flex items-center gap-2 text-xs text-creme/70 mb-3">
               <Link href="/" className="hover:text-creme transition-colors">Home</Link>
               <span>/</span>
               <Link href="/categories" className="hover:text-creme transition-colors">Categories</Link>
               <span>/</span>
               <span className="text-creme">{category.name}</span>
             </nav>
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-secondary text-creme leading-[0.95] tracking-tight mb-3">
+            <h1 className="text-3xl md:text-5xl lg:text-6xl font-secondary text-creme leading-[0.95] tracking-tight mb-2">
               {category.name}
             </h1>
-            <p className="text-sm md:text-base text-creme/80 font-primary max-w-xl">
+            <p className="text-sm text-creme/80 font-primary max-w-lg">
               {category.description}
             </p>
           </div>
@@ -155,8 +171,8 @@ export default function CategoryProductsPage() {
       </section>
 
       {/* Results Count */}
-      <section className="py-6 md:py-8 border-b border-alpha/10">
-        <div className="max-w-[1440px] mx-auto px-4 md:px-12">
+      <section className="py-5 md:py-6 border-b border-alpha/10">
+        <div className="max-w-[1440px] mx-auto px-4">
           <p className="text-sm text-alpha/60 font-primary">
             <span className="text-alpha font-medium">{filteredProducts.length}</span> products
           </p>
@@ -164,16 +180,27 @@ export default function CategoryProductsPage() {
       </section>
 
       {/* Products Grid */}
-      <section className="py-8 md:py-12">
-        <div className="max-w-[1440px] mx-auto px-4 md:px-12">
-          {filteredProducts.length > 0 ? (
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-6">
-              {filteredProducts.map((product) => (
-                <ProductItem key={product.id} product={product} />
-              ))}
-            </div>
+      <section className="py-6 md:py-10">
+        <div className="max-w-[1440px] mx-auto px-4">
+          {paginatedProducts.length > 0 ? (
+            <>
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-5">
+                {paginatedProducts.map((product) => (
+                  <ProductItem key={product.id} product={product} />
+                ))}
+              </div>
+              {totalPages > 1 && (
+                <div className="mt-10 md:mt-14">
+                  <Pagination
+                    currentPage={currentPage}
+                    totalPages={totalPages}
+                    onPageChange={handlePageChange}
+                  />
+                </div>
+              )}
+            </>
           ) : (
-            <div className="text-center py-16">
+            <div className="text-center py-14">
               <p className="text-alpha/60 font-primary mb-4">No products match your filters.</p>
               <button
                 onClick={handleClearFilters}
