@@ -175,7 +175,7 @@ export function ProductCardBadge({
   className = "",
 }: ProductCardBadgeProps) {
   const baseStyles =
-    "absolute top-0 left-0 z-dropdown px-3 py-1 text-[0.55rem] uppercase tracking-widest font-bold border";
+    "absolute top-0 left-0 z-10 px-3 py-1 text-[0.55rem] uppercase tracking-widest font-bold border";
   
   // Luxury variants
   const variantStyles = {
@@ -214,7 +214,7 @@ export function ProductCardWishlist({
         e.stopPropagation();
         onClick?.();
       }}
-      className={`absolute top-2 right-2 z-dropdown w-7 h-7 flex items-center justify-center rounded-full transition-all duration-300 ${
+      className={`absolute top-2 right-2 z-10 w-7 h-7 flex items-center justify-center rounded-full transition-all duration-300 ${
         isActive
           ? "bg-alpha text-creme"
           : "bg-white/80 backdrop-blur-sm text-alpha hover:bg-alpha hover:text-creme opacity-0 group-hover:opacity-100"
