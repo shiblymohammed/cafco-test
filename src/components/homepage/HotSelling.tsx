@@ -1,6 +1,10 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { FreeMode } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/free-mode";
 import {
   ProductCard,
   ProductCardImageContainer,
@@ -162,40 +166,40 @@ export default function HotSelling() {
     <section ref={sectionRef} className="relative bg-creme border-t border-black/5">
       <div className="max-w-[1920px] mx-auto">
         {/* Mobile Layout */}
-        <div className="lg:hidden">
-          <div className="relative h-[70vh] overflow-hidden">
-            <img
-              src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?q=80&w=1200&auto=format&fit=crop"
-              alt="Trending Interior"
-              className="absolute inset-0 w-full h-full object-cover"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-alpha/80 via-alpha/40 to-transparent" />
-            <div className="absolute inset-0 flex flex-col justify-end p-8">
-              <span className="text-xs font-primary uppercase tracking-[0.3em] text-ivory/70 mb-4">
+        <div className="lg:hidden py-6">
+          {/* Compact Header - Matching BestSellers Style */}
+          <div className="flex items-center justify-center px-4 mb-10">
+            <div className="text-center">
+              <span className="block text-xs font-primary uppercase tracking-[0.25em] text-alpha/60 mb-1.5">
                 Curated Selection
               </span>
-              <h2 className="font-secondary text-4xl text-ivory leading-[1.1] mb-4">
-                Trending<br />
-                <span className="italic">Interiors</span><br />
-                2026
+              <h2 className="text-3xl font-secondary text-alpha tracking-tight">
+                Trending Now
               </h2>
-              <p className="text-ivory/80 font-primary text-sm max-w-md leading-relaxed mb-6">
-                Timeless designs that tap into enduring elegance.
-              </p>
-              <a 
-                href="/collections/trending" 
-                className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-ivory border border-ivory/30 px-6 py-3 w-fit hover:bg-ivory hover:text-alpha transition-all duration-300"
-              >
-                Explore Collection
-              </a>
             </div>
           </div>
-          <div className="p-4 bg-ivory/50">
-            <div className="grid grid-cols-2 gap-3">
+
+          {/* Products Swiper */}
+          <div className="pl-4">
+            <Swiper
+              modules={[FreeMode]}
+              spaceBetween={4}
+              slidesPerView={1.6}
+              speed={600}
+              freeMode={{ enabled: true, sticky: false, momentumRatio: 0.5 }}
+              grabCursor={true}
+              breakpoints={{
+                480: { slidesPerView: 2.1, spaceBetween: 4 },
+                640: { slidesPerView: 2.5, spaceBetween: 5 },
+              }}
+              className="!overflow-visible"
+            >
               {hotProducts.map((product) => (
-                <ProductCardItem key={product.id} product={product} />
+                <SwiperSlide key={product.id} className="!h-auto">
+                  <ProductCardItem product={product} />
+                </SwiperSlide>
               ))}
-            </div>
+            </Swiper>
           </div>
         </div>
 
