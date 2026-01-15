@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { useState } from "react";
 
 const offers = [
   {
@@ -37,6 +38,133 @@ const offers = [
   },
 ];
 
+function StackedCards() {
+  const [cards, setCards] = useState(offers);
+  const [dragStart, setDragStart] = useState<{ x: number; y: number } | null>(null);
+  const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
+  const [isDragging, setIsDragging] = useState(false);
+
+  const handleDragStart = (e: React.TouchEvent | React.MouseEvent) => {
+    const clientX = 'touches' in e ? e.touches[0].clientX : e.clientX;
+    const clientY = 'touches' in e ? e.touches[0].clientY : e.clientY;
+    setDragStart({ x: clientX, y: clientY });
+    setIsDragging(true);
+  };
+
+  const handleDragMove = (e: React.TouchEvent | React.MouseEvent) => {
+    if (!dragStart) return;
+    const clientX = 'touches' in e ? e.touches[0].clientX : e.clientX;
+    const clientY = 'touches' in e ? e.touches[0].clientY : e.clientY;
+    setDragOffset({
+      x: clientX - dragStart.x,
+      y: clientY - dragStart.y,
+    });
+  };
+
+  const handleDragEnd = () => {
+    if (Math.abs(dragOffset.x) > 100 || Math.abs(dragOffset.y) > 100) {
+      // Move top card to bottom
+      setCards((prev) => [...prev.slice(1), prev[0]]);
+    }
+    setDragStart(null);
+    setDragOffset({ x: 0, y: 0 });
+    setIsDragging(false);
+  };
+
+  const handleNext = () => {
+    setCards((prev) => [...prev.slice(1), prev[0]]);
+  };
+
+  return (
+    <div className="relative">
+      {/* Stack container */}
+      <div className="relative h-[480px] mx-auto max-w-sm">
+        {cards.map((offer, index) => {
+          const isTop = index === 0;
+          const scale = 1 - index * 0.05;
+          const yOffset = index * 12;
+          const opacity = 1 - index * 0.2;
+
+          return (
+            <div
+              key={offer.id}
+              className="absolute inset-0 transition-all duration-300 ease-out"
+              style={{
+                transform: isTop && isDragging
+                  ? `translate(${dragOffset.x}px, ${dragOffset.y}px) scale(${scale}) translateY(${yOffset}px)`
+                  : `scale(${scale}) translateY(${yOffset}px)`,
+                opacity: index < 3 ? opacity : 0,
+                zIndex: cards.length - index,
+                pointerEvents: isTop ? 'auto' : 'none',
+              }}
+              onTouchStart={isTop ? handleDragStart : undefined}
+              onTouchMove={isTop ? handleDragMove : undefined}
+              onTouchEnd={isTop ? handleDragEnd : undefined}
+              onMouseDown={isTop ? handleDragStart : undefined}
+              onMouseMove={isTop && isDragging ? handleDragMove : undefined}
+              onMouseUp={isTop ? handleDragEnd : undefined}
+              onMouseLeave={isTop ? handleDragEnd : undefined}
+            >
+              <a
+                href={`/offers/${offer.id}`}
+                className="block h-full bg-white shadow-xl overflow-hidden"
+                onClick={(e) => isDragging && e.preventDefault()}
+              >
+                {/* Image */}
+                <div className="relative w-full h-48 overflow-hidden">
+                  <Image
+                    src={offer.image}
+                    alt={offer.title}
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 768px) 100vw, 400px"
+                  />
+                </div>
+
+                {/* Content */}
+                <div className="p-6 flex flex-col items-center text-center">
+                  <h3 className="text-2xl font-semibold text-[#2C3E50] tracking-tight mb-1">
+                    {offer.label}
+                  </h3>
+                  <p className="text-base font-medium text-[#2C3E50] mb-3 uppercase tracking-wide">
+                    {offer.title}
+                  </p>
+                  <p className="text-sm text-gray-500 leading-relaxed mb-6">
+                    {offer.description}
+                  </p>
+
+                  {/* Button */}
+                  <button className="px-8 py-3 bg-[#1a2332] text-white text-sm font-medium uppercase tracking-wider hover:bg-[#2C3E50] transition-colors duration-300">
+                    {offer.action}
+                  </button>
+                </div>
+              </a>
+            </div>
+          );
+        })}
+      </div>
+
+      {/* Navigation dots */}
+      <div className="flex justify-center gap-2 mt-6">
+        {offers.map((offer) => (
+          <button
+            key={offer.id}
+            onClick={handleNext}
+            className={`w-2 h-2 rounded-full transition-all duration-300 ${cards[0].id === offer.id ? 'bg-[#1a2332] w-6' : 'bg-gray-300'
+              }`}
+            aria-label={`Go to offer ${offer.id}`}
+          />
+        ))}
+      </div>
+
+      {/* Swipe hint */}
+      <p className="text-center text-xs text-gray-400 mt-4">
+        Swipe or drag to see more offers
+      </p>
+    </div>
+  );
+}
+
 export default function Offers() {
   return (
     <section className="py-20 md:py-28 bg-ivory">
@@ -51,8 +179,13 @@ export default function Offers() {
           </h2>
         </div>
 
-        {/* Offers Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {/* Mobile: Stacked Cards */}
+        <div className="md:hidden">
+          <StackedCards />
+        </div>
+
+        {/* Desktop: Grid */}
+        <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-4 gap-6">
           {offers.map((offer) => (
             <a
               key={offer.id}
@@ -66,7 +199,7 @@ export default function Offers() {
                   alt={offer.title}
                   fill
                   className="object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
-                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                  sizes="(max-width: 1024px) 50vw, 25vw"
                 />
               </div>
 
