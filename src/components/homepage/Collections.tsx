@@ -53,10 +53,15 @@ export default function Collections() {
   const [dragDelta, setDragDelta] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
   const minSwipeDistance = 50;
   const cardWidth = 72; // percentage
   const cardGap = 12; // pixels
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const nextSlide = useCallback(() => {
     if (isAnimating) return;
@@ -153,7 +158,7 @@ export default function Collections() {
     
     // Base position calculation
     const baseOffset = diff * (cardWidth + 2); // cardWidth% + gap
-    const dragOffset = isDragging ? (dragDelta / window.innerWidth) * 100 : 0;
+    const dragOffset = mounted && isDragging ? (dragDelta / window.innerWidth) * 100 : 0;
     const translateX = baseOffset + dragOffset;
     
     // Opacity based on position
@@ -174,7 +179,7 @@ export default function Collections() {
   };
 
   return (
-    <section className="bg-creme py-8 sm:py-12 md:py-20 border-t border-black/5">
+    <section className="bg-creme py-16 sm:py-12 md:py-20 border-t border-black/5">
       {/* Header - Hidden on mobile */}
       <div className="hidden md:block max-w-[1440px] mx-auto px-4 mb-6 sm:mb-10 md:mb-16 text-center">
         <p className="text-xs font-primary uppercase tracking-[0.2em] text-alpha/60 mb-1.5">
