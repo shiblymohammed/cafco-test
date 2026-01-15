@@ -5,34 +5,34 @@ import Image from "next/image";
 const offers = [
   {
     id: 1,
-    label: "Members Only",
-    title: "Privileged Access",
-    description: "Join for early access to new arrivals and exclusive sales.",
-    action: "Join Now",
+    label: "UP TO 40% OFF",
+    title: "SOFAS & SECTIONALS",
+    description: "Limited time only. Shop now.",
+    action: "SHOP NOW",
     image: "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?q=80&w=800&auto=format&fit=crop",
   },
   {
     id: 2,
-    label: "Seasonal Edit",
-    title: "The Winter Sale",
+    label: "UP TO 30% OFF",
+    title: "DINING TABLES",
     description: "Complimentary shipping on all orders over $2500.",
-    action: "Shop The Edit",
+    action: "SHOP NOW",
     image: "https://images.unsplash.com/photo-1565538810643-b5bdb714032a?q=80&w=800&auto=format&fit=crop",
   },
   {
     id: 3,
-    label: "Design Services",
-    title: "Interior Concierge",
-    description: "Book a complimentary consultation with our design experts.",
-    action: "Book Now",
+    label: "UP TO 25% OFF",
+    title: "BEDROOM FURNITURE",
+    description: "Transform your space with our exclusive collection.",
+    action: "SHOP NOW",
     image: "https://images.unsplash.com/photo-1600585153490-76fb20a32601?q=80&w=800&auto=format&fit=crop",
   },
   {
     id: 4,
-    label: "New Arrivals",
-    title: "Spring Collection",
+    label: "UP TO 35% OFF",
+    title: "OUTDOOR LIVING",
     description: "Discover fresh designs for the new season.",
-    action: "Explore Now",
+    action: "SHOP NOW",
     image: "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?q=80&w=800&auto=format&fit=crop",
   },
 ];
@@ -52,60 +52,40 @@ export default function Offers() {
         </div>
 
         {/* Offers Grid */}
-        <div className="grid md:grid-cols-2 gap-6 lg:gap-8">
-          {offers.map((offer, index) => (
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {offers.map((offer) => (
             <a
               key={offer.id}
               href={`/offers/${offer.id}`}
-              className="group relative flex flex-col sm:flex-row bg-creme overflow-hidden hover:shadow-card-hover transition-shadow duration-500"
+              className="group relative flex flex-col bg-white overflow-hidden hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 ease-out"
             >
               {/* Image */}
-              <div className="relative w-full sm:w-2/5 h-[220px] sm:h-auto sm:min-h-[280px] overflow-hidden">
+              <div className="relative w-full aspect-[4/3] overflow-hidden">
                 <Image
                   src={offer.image}
                   alt={offer.title}
                   fill
-                  className="object-cover group-hover:scale-105 transition-transform duration-700"
-                  sizes="400px"
+                  className="object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
                 />
-                {/* Number Overlay */}
-                <div className="absolute top-4 left-4 w-10 h-10 bg-alpha flex items-center justify-center">
-                  <span className="text-sm font-primary text-ivory">0{index + 1}</span>
-                </div>
               </div>
 
               {/* Content */}
-              <div className="flex-1 p-6 sm:p-8 flex flex-col justify-center">
-                <span className="text-[0.6rem] font-primary uppercase tracking-[0.2em] text-gold mb-3">
+              <div className="flex-1 p-8 flex flex-col items-center text-center bg-white">
+                <h3 className="text-3xl sm:text-4xl font-semibold text-[#2C3E50] tracking-tight mb-2">
                   {offer.label}
-                </span>
-                <h3 className="text-2xl sm:text-3xl font-secondary text-alpha tracking-tight mb-3 group-hover:text-gold transition-colors duration-300">
-                  {offer.title}
                 </h3>
-                <p className="text-sm text-alpha/60 leading-relaxed mb-6">
+                <p className="text-lg sm:text-xl font-medium text-[#2C3E50] mb-4 uppercase tracking-wide">
+                  {offer.title}
+                </p>
+                <p className="text-sm text-gray-500 leading-relaxed mb-8">
                   {offer.description}
                 </p>
-                <div className="flex items-center gap-3 mt-auto">
-                  <span className="text-[0.7rem] font-primary uppercase tracking-[0.15em] text-alpha group-hover:text-gold transition-colors duration-300">
-                    {offer.action}
-                  </span>
-                  <div className="w-8 h-[1px] bg-alpha/30 group-hover:w-12 group-hover:bg-gold transition-all duration-300" />
-                  <svg
-                    className="w-4 h-4 text-alpha/40 group-hover:text-gold group-hover:translate-x-1 transition-all duration-300"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    strokeWidth={2}
-                  >
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-                  </svg>
-                </div>
-              </div>
 
-              {/* Corner Accent */}
-              <div className="absolute top-0 right-0 w-16 h-16 overflow-hidden">
-                <div className="absolute top-0 right-0 w-[1px] h-8 bg-gold/30 group-hover:h-12 transition-all duration-300" />
-                <div className="absolute top-0 right-0 w-8 h-[1px] bg-gold/30 group-hover:w-12 transition-all duration-300" />
+                {/* Button */}
+                <button className="mt-auto px-10 py-4 bg-[#1a2332] text-white text-sm font-medium uppercase tracking-wider hover:bg-[#2C3E50] hover:scale-105 hover:shadow-xl transition-all duration-300 ease-out">
+                  {offer.action}
+                </button>
               </div>
             </a>
           ))}
