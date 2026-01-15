@@ -1,14 +1,16 @@
 interface SearchIconProps {
     size?: number;
+    className?: string;
 }
 
-export default function SearchIcon({ size = 24 }: SearchIconProps) {
+export default function SearchIcon({ size = 24, className }: SearchIconProps) {
     return (
         <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
             width={size}
             height={size}
+            className={className}
         >
             <g
                 fill="none"
